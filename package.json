@@ -1,0 +1,19 @@
+{
+  "name": "Playwright-Demoblaze",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:QAZebass/Playwright-Demoblaze.git",
+  "author": "QAZebass <ze.basszender@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.46.1",
+    "yarn": "^1.22.22",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@playwright/test": "^1.43.1",
+    "@types/node": "^20.12.7",
+    "prettier": "3.2.5"
+  }
+}
