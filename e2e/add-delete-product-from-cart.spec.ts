@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
-import { HomePage } from "../../pages/homePage";
-import { productDetailPage, cartAlertConfirmation } from "../../pages/productDetailPage";
-import { cartConfirmation, status } from "../../utils/dataFixture";
-import { Apis, productID, deletionStatusResponse, productuuid } from "../../utils/apiHelpers";
-import { productListPage } from "../../pages/productListPage";
+import { HomePage } from './pages/homePage';
+import { productDetailPage, cartAlertConfirmation } from './pages/productDetailPage';
+import { cartConfirmation, status } from './utils/dataFixture';
+import { Apis, productID, deletionStatusResponse, productuuid } from './utils/apiHelpers';
+import { productListPage } from './pages/productListPage';
 
 test.describe("Demoblaze Cart Testing", async () => {
   const expectedConfirmation = cartConfirmation.productAddedtoCart;
@@ -13,7 +13,7 @@ test.describe("Demoblaze Cart Testing", async () => {
     async ({ request }) => {
       const apis = new Apis(request);
       await apis.getItemID(productID);
-      await apis.DeleteItemFromCart(productuuid)
+      await apis.DeleteItemFromCart(productuuid);
       expect(deletionStatusResponse).toBe(status.ok);
     },
   );
@@ -22,7 +22,7 @@ test.describe("Demoblaze Cart Testing", async () => {
     const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);
 
-    await homepage.loadWeb("/");
+    await page.goto("/");
     await homepage.clickPhonesCategory();
     await plp.clickOnRandomProduct();
     await pdp.cartAlertListener();
@@ -36,7 +36,7 @@ test.describe("Demoblaze Cart Testing", async () => {
     const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);
 
-    await homepage.loadWeb("/");
+    await page.goto("/");
     await homepage.clickLaptopCategory();
     await plp.clickOnRandomProduct();
     await pdp.cartAlertListener();
@@ -50,7 +50,7 @@ test.describe("Demoblaze Cart Testing", async () => {
     const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);
 
-    await homepage.loadWeb("/");
+    await page.goto("/");
     await homepage.clickMonitorCategory();
     await plp.clickOnRandomProduct();
     await pdp.cartAlertListener();
@@ -64,11 +64,11 @@ test.describe("Demoblaze Cart Testing", async () => {
     const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);
 
-    await homepage.loadWeb("/");
-    await plp.clickOnRandomUnsortedProduct()
-    await pdp.cartAlertListener()
-    await pdp.clickOnAddToCartButton()
+    await page.goto("/");
+    await plp.clickOnRandomUnsortedProduct();
+    await pdp.cartAlertListener();
+    await pdp.clickOnAddToCartButton();
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
 
-  })
+  });
 });

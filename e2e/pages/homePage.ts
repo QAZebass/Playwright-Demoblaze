@@ -1,13 +1,13 @@
 import { Page, Locator, expect, APIRequestContext } from "@playwright/test";
-import { homeLocators } from "../Locators/home";
-import { basePage } from "./basePage";
+import { homeLocators } from '../Locators/home';
 import { productListPage } from "./productListPage";
 import { productDetailPage } from "./productDetailPage";
 
 export var productCat: string;
 export var productCategory: any;
 
-export class HomePage extends basePage {
+export class HomePage {
+  page: Page;
   private pdp: productDetailPage;
   private plp: productListPage;
   private logInButton: Locator;
@@ -28,8 +28,7 @@ export class HomePage extends basePage {
   private monitorCategory: Locator;
 
   constructor(page: Page, request: APIRequestContext) {
-    super(page);
-
+    this.page = page;
     this.pdp = new productDetailPage(page);
     this.plp = new productListPage(page, request);
     this.productTitles = page.locator(homeLocators.productTitles);
@@ -54,11 +53,11 @@ export class HomePage extends basePage {
   async logInAssertion(user: string) {
     await this.welcomeUserText.waitFor();
     const text = await this.welcomeUserText.textContent();
-    this.assertText(text!, `Welcome ${user}`);
+    expect(text).toEqual(`Welcome ${user}`);
   }
   async clickOnHome() {
     await this.homeButton.waitFor();
-    this.clickOn(homeLocators.homeButton);
+    this.homeButton.click();
   }
   async clickPhonesCategory() {
     productCat = "phone";

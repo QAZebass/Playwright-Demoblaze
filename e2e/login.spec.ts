@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 import { test, expect } from "@playwright/test";
-import { Header } from '../pages/header';
-import { HomePage } from '../pages/homePage';
-import { LoginPage } from '../pages/loginPage';
-import { invalidCredentials, errorMessage } from '../utils/dataFixture';
-import { alertMessage } from '../pages/loginPage';
+import { Header } from './pages/header';
+import { HomePage } from './pages/homePage';
+import { LoginPage } from './pages/loginPage';
+import { invalidCredentials, errorMessage } from './utils/dataFixture';
+import { alertMessage } from './pages/loginPage';
 dotenv.config();
 test.describe("Log into Demoblaze", async () => {
     test.use({ storageState: { cookies: [], origins: [] } });
@@ -17,7 +17,7 @@ test.describe("Log into Demoblaze", async () => {
         const homepage = new HomePage(page, request);
         const loginpage = new LoginPage(page);
 
-        await homepage.loadWeb("/");
+        await page.goto('/');
         await header.clickLogInButton();
         await loginpage.typeInUsername(username!);
         await loginpage.typeInPassword(password!);
@@ -36,7 +36,7 @@ test.describe("Log into Demoblaze", async () => {
         const loginpage = new LoginPage(page);
         const header = new Header(page);
 
-        await homepage.loadWeb("/");
+        await page.goto('/');
         await header.clickLogInButton();
         await loginpage.typeInUsername(username!);
         await loginpage.typeInPassword(wrongpass);
@@ -58,7 +58,7 @@ test.describe("Log into Demoblaze", async () => {
         const header = new Header(page);
         const loginpage = new LoginPage(page);
 
-        await homepage.loadWeb("/");
+        await page.goto("/");
         await header.clickLogInButton();
         await loginpage.typeInUsername(wrongUser);
         await loginpage.typeInPassword(password!);
@@ -72,7 +72,7 @@ test.describe("Log into Demoblaze", async () => {
         const header = new Header(page);
         const homepage = new HomePage(page, request);
 
-        await homepage.loadWeb("/");
+        await page.goto("/");
         await header.clickLogOutButton();
     });
 });

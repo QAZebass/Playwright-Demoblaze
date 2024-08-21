@@ -1,5 +1,4 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { basePage } from "./basePage";
 import { pdpLocators } from "../Locators/pdp";
 import { product } from "./productListPage";
 export let cartAlertConfirmation = "";
@@ -18,7 +17,8 @@ export const phoneprice = selectedProductDetails.phonePrice;
 export const monitor = selectedProductDetails.monitor;
 export const monitorprice = selectedProductDetails.monitorPrice;
 
-export class productDetailPage extends basePage {
+export class productDetailPage {
+  page: Page;
   private productInformationWrapper: Locator;
   private selectedProductName: Locator;
   private selectedProductPrice: Locator;
@@ -26,7 +26,7 @@ export class productDetailPage extends basePage {
   private addToCartButton: Locator;
 
   constructor(page: Page) {
-    super(page);
+    this.page = page;
 
     this.productInformationWrapper = this.page.locator(
       pdpLocators.productInformationWrapper,
@@ -45,7 +45,7 @@ export class productDetailPage extends basePage {
 
   async clickOnAddToCartButton() {
     const productNameInPDP = await this.selectedProductName.textContent();
-    await this.assertText(product, productNameInPDP!)
+    expect(product).toEqual(productNameInPDP!);
     const selectedProduct = await this.selectedProductName.textContent();
     const selectedProductPrice = await this.selectedProductPrice.textContent();
     const trimmed = selectedProductPrice?.slice(
