@@ -52,13 +52,21 @@ export default defineConfig({
     },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: 'Demoblaze E2E tests on Firefox',
+      use: {
+        ...devices['Desktop Firefox'],
+        storageState: './e2e/playwright/.auth/user.json'
+      },
+      dependencies: ['setup'],
     },
 
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'Demoblaze E2E tests on Safari',
+      use: {
+        ...devices['Desktop Safari'],
+        storageState: './e2e/playwright/.auth/user.json'
+      },
+      dependencies: ['setup'],
     },
 
     /* Test against mobile viewports. */
