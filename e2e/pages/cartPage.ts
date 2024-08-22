@@ -43,29 +43,30 @@ export class cartPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.cartTitle = this.page.locator(cartLocators.cartTitle);
-    this.productName = this.page.locator(cartLocators.productName);
-    this.productPrice = this.page.locator(cartLocators.productPrice);
-    this.table = this.page.locator(cartLocators.table);
-    this.tableTitleProduct = this.page.locator(cartLocators.tableTitleProduct);
-    this.tablePriceProduct = this.page.locator(cartLocators.tablePriceProduct);
-    this.totalPrice = this.page.locator(cartLocators.totalPrice);
-    this.placeOrderButton = this.page.locator(cartLocators.placeOrderButton);
+    this.cartTitle = this.page.locator('[class="col-lg-8"] h2');
+    this.productName = this.page.locator('[class="success"] td >> nth=1');
+    this.productPrice = this.page.locator('[class="success"] td >> nth=2');
+    //PRODUCT TABLE
+    this.table = this.page.locator('[class="table-responsive"]');
+    this.tableTitleProduct = this.page.locator('th:has-text("Title")');
+    this.tablePriceProduct = this.page.locator('th:has-text("Price")');
+    this.totalPrice = this.page.locator("div h3");
+    this.placeOrderButton = this.page.locator('button:has-text("Place Order")');
     //order modal
-    this.oderModal = this.page.locator(cartLocators.orderModal);
-    this.price = this.page.locator(cartLocators.price);
-    this.nameInput = this.page.locator(cartLocators.nameInput);
-    this.cityInput = this.page.locator(cartLocators.cityInput);
-    this.countryInput = this.page.locator(cartLocators.countryInput);
-    this.creditCardInput = this.page.locator(cartLocators.creditCardInput);
-    this.monthInput = this.page.locator(cartLocators.monthInput);
-    this.yearInput = this.page.locator(cartLocators.yearInput);
-    this.modalFooter = this.page.locator(cartLocators.modalFooter);
-    this.purchaseButton = this.page.locator(cartLocators.purchaseButton);
-    this.closeButton = this.page.locator(cartLocators.closeButton);
-    this.thankYouModal = this.page.locator(cartLocators.thankYouModal);
-    this.thankYouMessage = this.page.locator(cartLocators.thankYouMessage);
-    this.okButton = this.page.locator(cartLocators.okButton);
+    this.oderModal = this.page.locator('[id="orderModal"]');
+    this.price = this.page.locator('[id="totalm"]');
+    this.nameInput = this.page.locator('[id="name"]');
+    this.cityInput = this.page.locator('[id="city"]');
+    this.countryInput = this.page.locator('[id="country"]');
+    this.creditCardInput = this.page.locator('[id="card"]');
+    this.monthInput = this.page.locator('[id="month"]');
+    this.yearInput = this.page.locator('[id="year"]');
+    this.modalFooter = this.page.locator('[class="modal-content"] >> nth=2');
+    this.purchaseButton = this.page.locator('[class="modal-content"] >> nth=2 >> button:has-text("Purchase")');
+    this.closeButton = this.page.locator('[class="modal-content"] >> nth=2 >> button:has-text("Close")');
+    this.thankYouModal = this.page.locator('[class$="showSweetAlert visible"]');
+    this.thankYouMessage = this.page.locator('[class$="showSweetAlert visible"] h2');
+    this.okButton = this.page.locator('[class$="showSweetAlert visible"] button:not(.cancel.btn.btn-lg.btn-default)');
   }
 
   async validateProductInformation(
@@ -78,13 +79,13 @@ export class cartPage {
       if (cartProductTable[i].name === product1) {
         const productname = cartProductTable[i].name;
         const productprice = cartProductTable[i].price;
-        await this.assertText(productname, product1);
-        await this.assertText(productprice, price1);
+        expect(productname).toEqual(product1);
+        expect(productprice).toEqual(price1);
       } else if (cartProductTable[i].name === product2) {
         const productname = cartProductTable[i].name;
         const productprice = cartProductTable[i].price;
-        await this.assertText(productname, product2);
-        await this.assertText(productprice, price2);
+        expect(productname).toEqual(product2);
+        expect(productprice).toEqual(price2);
       }
     }
   }
@@ -119,7 +120,7 @@ export class cartPage {
     console.log(cartProductTable);
     this.validateProductInformation(product1, price1, product2, price2);
     await this.placeOrderButton.waitFor();
-    await this.clickOn(cartLocators.placeOrderButton);
+    await this.placeOrderButton.click();
   }
 
   async fillOrderModal(
@@ -134,25 +135,25 @@ export class cartPage {
     await this.oderModal.waitFor();
     const priceInModal = await this.price.textContent();
     const justPrice = priceInModal.replace("Total: ", "");
-    await this.assertText(+justPrice, price);
-    await this.typeIn(cartLocators.nameInput, name);
-    await this.typeIn(cartLocators.countryInput, country);
-    await this.typeIn(cartLocators.cityInput, city);
-    await this.typeIn(cartLocators.creditCardInput, creditCardNumber);
-    await this.typeIn(cartLocators.monthInput, month);
-    await this.typeIn(cartLocators.yearInput, year);
+    expect(+justPrice).toEqual(price);
+    await this.nameInput.fill(name);
+    await this.countryInput.fill(country);
+    await this.cityInput.fill(city);
+    await this.creditCardInput.fill(creditCardNumber);
+    await this.monthInput.fill(month);
+    await this.yearInput.fill(year);
   }
 
   async clickOnPurchaseButton() {
     await this.purchaseButton.waitFor({ state: "visible" });
-    await this.clickOn(cartLocators.purchaseButton);
+    await this.purchaseButton.click();
   }
 
   async clickOkButton(finishPurchaseMessage: string) {
     await this.thankYouModal.waitFor({ state: "visible" });
     const thanksMessage = await this.thankYouMessage.textContent();
-    await this.assertText(thanksMessage, finishPurchaseMessage);
-    await this.clickOn(cartLocators.okButton);
+    expect(thanksMessage).toEqual(finishPurchaseMessage);
+    await this.okButton.click();
     await this.thankYouModal.waitFor({ state: "hidden" });
   }
 }

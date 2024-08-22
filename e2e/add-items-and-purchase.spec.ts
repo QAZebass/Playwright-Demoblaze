@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
-import { HomePage } from '../pages/header';
-import { Header } from '../pages/header';
-import { purchaseConfirmation } from '../utils/dataFixture';
-import { phone, phoneprice, monitor, monitorprice, totalFromTest } from '../pages/productDetailPage';
-import { cartPage, name, country, city, creditCard, month, year } from '../pages/cartPage';
+import { HomePage } from './pages/homePage';
+import { Header } from './pages/header';
+import { purchaseConfirmation } from './utils/dataFixture';
+import { phone, phoneprice, monitor, monitorprice, totalFromTest } from './pages/productDetailPage';
+import { cartPage, name, country, city, creditCard, month, year } from './pages/cartPage';
 
 test("Validate that the user can complete the purchase of two items", async ({ page, request }) => {
 
@@ -11,7 +11,7 @@ test("Validate that the user can complete the purchase of two items", async ({ p
   const header = new Header(page);
   const cartpage = new cartPage(page);
 
-  await homepage.loadWeb("/");
+  await page.goto("/");
   await homepage.selectPhone();
   await header.clickHomeButton();
   await homepage.selectMonitor();

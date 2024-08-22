@@ -1,9 +1,8 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { loginLocator } from "../Locators/login";
-import { basePage } from "./basePage";
 export let alertMessage = "";
 
-export class LoginPage extends basePage {
+export class LoginPage {
+  page: Page;
   private usernameTitle: Locator;
   private usernameInput: Locator;
   private passwordTitle: Locator;
@@ -13,32 +12,32 @@ export class LoginPage extends basePage {
   private footerWrapper: Locator;
 
   constructor(page: Page) {
-    super(page);
+    this.page = page;
 
-    this.usernameTitle = page.locator(loginLocator.usernameTitle);
-    this.usernameInput = page.locator(loginLocator.usernameInput);
-    this.passwordTitle = page.locator(loginLocator.passwordTitle);
-    this.passwordInput = page.locator(loginLocator.passwordInput);
-    this.closeButton = page.locator(loginLocator.closeButton);
-    this.logInButton = page.locator(loginLocator.logInButton);
-    this.footerWrapper = page.locator(loginLocator.footerWrapper);
+    this.usernameTitle = page.locator('[for="log-name"]');
+    this.usernameInput = page.locator('[id="loginusername"]');
+    this.passwordTitle = page.locator('label[for="log-pass"]');
+    this.passwordInput = page.locator('[id="loginpassword"]');
+    this.closeButton = page.locator('button[type="button"]');
+    this.logInButton = page.locator('button[class="btn btn-primary"]:has-text("Log in")');
+    this.footerWrapper = page.locator('[class="modal-footer"]');
   }
 
   async typeInUsername(username: string) {
     const usernameTitle = await this.usernameTitle.textContent();
     expect(usernameTitle).toEqual("Username:");
-    await this.typeIn(loginLocator.usernameInput, username);
+    await this.usernameInput.fill(username);
   }
   async typeInPassword(password: string) {
     const passwordTitle = await this.passwordTitle.first().textContent();
     expect(passwordTitle).toEqual("Password:");
-    await this.typeIn(loginLocator.passwordInput, password);
+    await this.passwordInput.fill(password);
     await this.page.waitForTimeout(1000);
   }
 
   async clickLogIn() {
     await this.logInButton.waitFor({ state: "visible", timeout: 3000 });
-    await this.page.locator(loginLocator.logInButton).click();
+    await this.logInButton.click();
     await this.page.waitForTimeout(2000);
   }
 

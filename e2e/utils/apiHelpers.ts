@@ -1,5 +1,5 @@
 import { test, expect, APIRequestContext } from "@playwright/test";
-export let selectedUnsortedProductDetails: any[] = []
+export let selectedUnsortedProductDetails: any[] = [];
 export let parsedResponse: string;
 export let id: string = "";
 export let deletionStatusResponse: number;
@@ -7,7 +7,7 @@ export let productID: number;
 export let productuuid: string;
 const fs = require("fs");
 const userData = fs.readFileSync(
-  "./suits/Demoblaze/playwright/.auth/user.json",
+  "./e2e/playwright/.auth/user.json",
   "utf-8",
 );
 function getRandomNumber(min, max) {
@@ -106,16 +106,16 @@ export class Apis {
     await test.step("Choose random, unsorted product and retrieve its category and name", async () => {
       const response = await this.reqContext.get(
         this.endpoints.chooseUnsortedProduct
-      )
+      );
       statusResponse = response.status();
       expect(statusResponse).toBe(200);
       const responseBody = await JSON.parse(await response.text());
-      const itemsLength = responseBody.Items.length
-      const randomProduct = getRandomNumber(0, itemsLength - 1)
-      const category = await responseBody.Items[randomProduct].cat
-      const id = await responseBody.Items[randomProduct].id
-      const title = await responseBody.Items[randomProduct].title
-      selectedUnsortedProductDetails.push({ cat: category, id: id, title: title, randomProductNumber: randomProduct })
-    })
+      const itemsLength = responseBody.Items.length;
+      const randomProduct = getRandomNumber(0, itemsLength - 1);
+      const category = await responseBody.Items[randomProduct].cat;
+      const id = await responseBody.Items[randomProduct].id;
+      const title = await responseBody.Items[randomProduct].title;
+      selectedUnsortedProductDetails.push({ cat: category, id: id, title: title, randomProductNumber: randomProduct });
+    });
   }
 }
