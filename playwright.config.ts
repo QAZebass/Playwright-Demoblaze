@@ -8,12 +8,13 @@ dotenv.config();
  * https://github.com/motdotla/dotenv
  */
 // import dotenv from 'dotenv';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({ path: './.env.Demoblaze' });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+
   testDir: './e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -27,8 +28,9 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
+    /* Base URL to use in actions like await page.goto('/'). */
     baseURL: 'https://www.demoblaze.com/',
+    //storageState: 'storageState.json',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -38,15 +40,25 @@ export default defineConfig({
   projects: [
     {
       name: "setup",
-      testMatch: /.*\.setup\.ts/,
-      testDir: "./e2e"
+      testMatch: 'login.setup.ts',
+      testDir: './e2e/setups',
+    },
+    {
+      name: "setup2",
+      testMatch: 'login.setup2.ts',
+      testDir: './e2e/setups',
+    },
+    {
+      name: "setup3",
+      testMatch: 'login.setup3.ts',
+      testDir: './e2e/setups',
     },
     {
       name: 'Demoblaze E2E tests in Chrome',
       testDir: './e2e',
       use: {
         ...devices['Desktop Chrome'],
-        storageState: './e2e/playwright/.auth/user.json'
+        storageState: './e2e/playwright/.auth/user1.json'
       },
       dependencies: ['setup'],
     },
@@ -55,18 +67,18 @@ export default defineConfig({
       name: 'Demoblaze E2E tests on Firefox',
       use: {
         ...devices['Desktop Firefox'],
-        storageState: './e2e/playwright/.auth/user.json'
+        storageState: './e2e/playwright/.auth/user2.json'
       },
-      dependencies: ['setup'],
+      dependencies: ['setup2'],
     },
 
     {
       name: 'Demoblaze E2E tests on Safari',
       use: {
         ...devices['Desktop Safari'],
-        storageState: './e2e/playwright/.auth/user.json'
+        storageState: './e2e/playwright/.auth/user3.json'
       },
-      dependencies: ['setup'],
+      dependencies: ['setup3'],
     },
 
     /* Test against mobile viewports. */

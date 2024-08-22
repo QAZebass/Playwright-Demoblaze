@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
+import { getAuthDataForBrowser } from '../e2e/utils/browserUtils';
 import { test, expect } from "@playwright/test";
 import { Header } from './pages/header';
 import { LoginPage } from './pages/loginPage';
 import { invalidCredentials, errorMessage } from './utils/dataFixture';
 import { alertMessage } from './pages/loginPage';
-
 dotenv.config();
 
 
@@ -12,6 +12,7 @@ test.describe("Log into Demoblaze", () => {
     test.use({ storageState: { cookies: [], origins: [] } });
 
     test("TC1: Validate that the user can login", async ({ page }) => {
+
         const username = process.env.USER_NAME;
         const password = process.env.PASSWORD;
 
@@ -62,8 +63,6 @@ test.describe("Log into Demoblaze", () => {
 });
 
 test.describe("Log out from Demoblaze", () => {
-    // Apply specific storage state for the logout test
-    test.use({ storageState: "./e2e/playwright/.auth/user.json" });
 
     test("TC4: Validate that the user can log out", async ({ page }) => {
         const header = new Header(page);

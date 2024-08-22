@@ -5,16 +5,15 @@
   "repository": "git@github.com:QAZebass/Playwright-Demoblaze.git",
   "author": "QAZebass <ze.basszender@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "playwright": "^1.46.1",
-    "yarn": "^1.22.22"
-  },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@playwright/test": "^1.46.1",
     "@types/node": "^20.12.7",
     "prettier": "3.2.5"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "yarn": "^1.22.22"
   },
   "scripts": {}
 }

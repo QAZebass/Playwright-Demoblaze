@@ -1,23 +1,27 @@
 import { expect, test } from "@playwright/test";
+import { getAuthDataForBrowser } from '../e2e/utils/browserUtils';
 import { HomePage } from './pages/homePage';
 import { productDetailPage, cartAlertConfirmation } from './pages/productDetailPage';
 import { cartConfirmation, status } from './utils/dataFixture';
 import { Apis, productID, deletionStatusResponse, productuuid } from './utils/apiHelpers';
 import { productListPage } from './pages/productListPage';
 
+
 test.describe("Demoblaze Cart Testing", async () => {
   const expectedConfirmation = cartConfirmation.productAddedtoCart;
 
   test.afterEach(
-    "Delete product after being added to cart",
-    async ({ request }) => {
+    "Delete product after being added to cart", async ({ request, browserName }) => {
       const apis = new Apis(request);
-      await apis.getItemID(productID);
+      const accountToken = await getAuthDataForBrowser(browserName);
+      const token = accountToken;
+      await apis.getItemID(productID, token);
       await apis.DeleteItemFromCart(productuuid);
       expect(deletionStatusResponse).toBe(status.ok);
     },
   );
-  test("TC1: Validate that the user can add one smartphone to cart", async ({ page, request }) => {
+  test("TC1: Validate that the user can add one smartphone to cart", async ({ page, request, browserName }) => {
+
     const pdp = new productDetailPage(page);
     const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);

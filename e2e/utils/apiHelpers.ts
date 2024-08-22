@@ -5,16 +5,11 @@ export let id: string = "";
 export let deletionStatusResponse: number;
 export let productID: number;
 export let productuuid: string;
-const fs = require("fs");
-const userData = fs.readFileSync(
-  "./e2e/playwright/.auth/user.json",
-  "utf-8",
-);
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-const user = JSON.parse(userData);
-const token = user.cookies.find((cookie) => cookie.name === "tokenp_").value;
+
+
 
 export class Apis {
   readonly reqContext: APIRequestContext;
@@ -36,7 +31,7 @@ export class Apis {
     };
   }
 
-  public async getItemID(productid: number) {
+  public async getItemID(productid: number, token: string) {
     let statusResponse: number;
 
     await test.step("Getting item ID", async () => {
