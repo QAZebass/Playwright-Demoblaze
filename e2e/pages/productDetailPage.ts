@@ -1,5 +1,4 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { pdpLocators } from "../Locators/pdp";
 import { product } from "./productListPage";
 export let cartAlertConfirmation = "";
 
@@ -28,19 +27,11 @@ export class productDetailPage {
   constructor(page: Page) {
     this.page = page;
 
-    this.productInformationWrapper = this.page.locator(
-      pdpLocators.productInformationWrapper,
-    );
-    this.selectedProductName = this.page.locator(
-      pdpLocators.selectedProductName,
-    );
-    this.selectedProductPrice = this.page.locator(
-      pdpLocators.selectedProductPrice,
-    );
-    this.selectedProductDescription = this.page.locator(
-      pdpLocators.selectedProductDescription,
-    );
-    this.addToCartButton = this.page.locator(pdpLocators.addToCartButton);
+    this.productInformationWrapper = this.page.locator('[id="tbodyid"]');
+    this.selectedProductName = this.page.locator('[id="tbodyid"] h2');
+    this.selectedProductPrice = this.page.locator('[id="tbodyid"] h3');
+    this.selectedProductDescription = this.page.locator('[id="tbodyid"] p');
+    this.addToCartButton = this.page.locator('[id="tbodyid"] a');
   }
 
   async clickOnAddToCartButton() {
@@ -48,10 +39,7 @@ export class productDetailPage {
     expect(product).toEqual(productNameInPDP!);
     const selectedProduct = await this.selectedProductName.textContent();
     const selectedProductPrice = await this.selectedProductPrice.textContent();
-    const trimmed = selectedProductPrice?.slice(
-      0,
-      selectedProductPrice.indexOf(" "),
-    );
+    const trimmed = selectedProductPrice?.slice(0, selectedProductPrice.indexOf(" "));
     const onlyNumberPrice = trimmed?.replace("$", "");
 
     const name = information[counter].category;
@@ -70,7 +58,7 @@ export class productDetailPage {
       console.log(selectedProductDetails);
     }
 
-    await this.page.locator(pdpLocators.addToCartButton).click();
+    await this.addToCartButton.click();
     await this.page.waitForTimeout(1000);
     counter++;
   }

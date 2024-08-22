@@ -1,6 +1,5 @@
 import { Page, Locator, APIRequestContext } from "@playwright/test";
 import { productCat, productCategory } from "./homePage";
-import { plpLocators } from "../Locators/plp";
 import { Apis, selectedUnsortedProductDetails } from "../utils/apiHelpers";
 export let product: any;
 
@@ -17,12 +16,12 @@ export class productListPage {
     this.page = page;
 
     this.apis = new Apis(request);
-    this.productsArray = this.page.locator(plpLocators.productsArray);
+    this.productsArray = this.page.locator('[class="card h-100"]');
   }
 
   async clickOnRandomProduct() {
 
-    const array = await this.page.$$(plpLocators.productsArray);
+    const array = await this.page.$$('[class="card h-100"]');
     const randomProductNumber = getRandomNumber(0, array.length - 1);
     console.log(`Number of ${productCategory} available: ${array.length}`);
     const productPicture = this.page.locator(

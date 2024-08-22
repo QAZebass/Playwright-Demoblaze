@@ -7,7 +7,7 @@ export let productID: number;
 export let productuuid: string;
 const fs = require("fs");
 const userData = fs.readFileSync(
-  "./suits/Demoblaze/playwright/.auth/user.json",
+  "./e2e/playwright/.auth/user.json",
   "utf-8",
 );
 function getRandomNumber(min, max) {

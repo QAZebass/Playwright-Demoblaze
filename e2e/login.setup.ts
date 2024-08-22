@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { test as setup } from "@playwright/test";
 import { Header } from './pages/header';
 import { LoginPage } from './pages/loginPage';
-dotenv.config({ path: './envs/.env.Demoblaze' });
+dotenv.config({ path: './.env.Demoblaze' });
 
 // UI LOGIN
 const authFile = "./e2e/playwright/.auth/user.json";

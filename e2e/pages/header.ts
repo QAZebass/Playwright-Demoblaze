@@ -1,5 +1,5 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { headerLocators } from "../Locators/header";
+
 
 export class Header {
   page: Page;
@@ -14,37 +14,37 @@ export class Header {
   constructor(page: Page) {
 
     this.page = page;
-    this.homeButton = this.page.locator(headerLocators.homeButton);
-    this.contactButton = this.page.locator(headerLocators.contactButton);
-    this.aboutUSButton = this.page.locator(headerLocators.aboutUSButton);
-    this.cartButton = this.page.locator(headerLocators.cartButton);
-    this.logOutButton = this.page.locator(headerLocators.logOutButton);
-    this.logInButton = this.page.locator(headerLocators.logInButton);
-    this.welcomeUser = this.page.locator(headerLocators.welcomeUser);
+    this.homeButton = this.page.locator('[class="nav-item active"]');
+    this.contactButton = this.page.locator('a:has-text("Contact")');
+    this.aboutUSButton = this.page.locator('a:contains("About us")');
+    this.cartButton = this.page.locator('[id="cartur"]');
+    this.logOutButton = this.page.locator('[id="logout2"]');
+    this.logInButton = this.page.locator('[id="login2"]');
+    this.welcomeUser = this.page.locator('[id="nameofuser"]');
   }
 
   async clickHomeButton() {
-    await this.clickOn(headerLocators.homeButton);
+    await this.homeButton.click();
   }
   async clickContactButton() {
-    await this.clickOn(headerLocators.contactButton);
+    await this.contactButton.click();
   }
   async clickAboutUsButton() {
-    await this.clickOn(headerLocators.aboutUSButton);
+    await this.aboutUSButton.click();
   }
   async clickCartButton() {
-    await this.clickOn(headerLocators.cartButton);
+    await this.cartButton.click();
   }
   async clickLogInButton() {
-    await this.clickOn(headerLocators.logInButton);
+    await this.logInButton.click();
   }
   async clickLogOutButton() {
     await this.logOutButton.waitFor();
-    await this.clickOn(headerLocators.logOutButton);
+    await this.logOutButton.click();
   }
   async welcomeUserAssertion(expectedUser: string) {
     await this.welcomeUser.waitFor({ timeout: 1500 });
     const text = await this.welcomeUser.textContent();
-    await this.assertText(text!, `Welcome ${expectedUser}`);
+    expect(text!).toEqual(`Welcome ${expectedUser}`);
   }
 }

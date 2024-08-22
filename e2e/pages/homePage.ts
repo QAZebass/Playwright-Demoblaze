@@ -1,5 +1,4 @@
 import { Page, Locator, expect, APIRequestContext } from "@playwright/test";
-import { homeLocators } from '../Locators/home';
 import { productListPage } from "./productListPage";
 import { productDetailPage } from "./productDetailPage";
 
@@ -31,19 +30,22 @@ export class HomePage {
     this.page = page;
     this.pdp = new productDetailPage(page);
     this.plp = new productListPage(page, request);
-    this.productTitles = page.locator(homeLocators.productTitles);
-    this.categoryWrapper = page.locator(homeLocators.categoriesWrapper);
-    this.categoryTitle = page.locator(homeLocators.categoryTitle);
-    this.phonesCategory = page.locator(homeLocators.phonesCategory);
-    this.productsArray = page.locator(homeLocators.productsArray);
-    this.productPicture = page.locator(homeLocators.productPicture);
-    this.productInfoContainer = page.locator(homeLocators.productInfoContainer);
-    this.productName = page.locator(homeLocators.productName);
-    this.productPrice = page.locator(homeLocators.productPrice);
-    this.productDescription = page.locator(homeLocators.productDescription);
-    this.laptopCategory = page.locator(homeLocators.laptopCategory);
-    this.monitorCategory = page.locator(homeLocators.monitorCategory);
-    this.homeButton = page.locator(homeLocators.homeButton);
+    this.productTitles = page.locator('[class="card h-100"]');
+    this.categoryWrapper = page.locator('[class="list-group"]');
+    this.categoryTitle = page.locator('[id="cat"]');
+
+    this.productsArray = page.locator('[class="card h-100"]');
+    this.productPicture = page.locator('[class="card-img-top img-fluid"]');
+    this.productInfoContainer = page.locator('[class="card-block"]');
+    this.productName = page.locator('[class="card-block"] a');
+    this.productPrice = page.locator('[class="card-block"] h5');
+    this.productDescription = page.locator('[class="card-block"] [class="card-text"]');
+    //PRODUCT CATEGORIES
+    this.phonesCategory = page.locator('[id="itemc"]:has-text("Phones")');
+    this.laptopCategory = page.locator('[id="itemc"]:has-text("Laptops")');
+    this.monitorCategory = page.locator('[id="itemc"]:has-text("Monitors")');
+
+    this.homeButton = page.locator('[class="nav-item active"]');
   }
 
   async clickOnLogIn() {
@@ -68,13 +70,9 @@ export class HomePage {
     expect(categoryTitle).toEqual("CATEGORIES");
 
     //Let's find the button and click
-    await this.page
-      .locator(homeLocators.phonesCategory)
-      .waitFor({ state: "visible" });
-    productCategory = await this.page
-      .locator(homeLocators.phonesCategory)
-      .textContent();
-    await this.page.locator(homeLocators.phonesCategory).click();
+    await this.phonesCategory.waitFor({ state: "visible" });
+    productCategory = await this.phonesCategory.textContent();
+    await this.phonesCategory.click();
     await this.page.waitForTimeout(1000);
   }
 
@@ -87,13 +85,9 @@ export class HomePage {
     expect(categoryTitle).toEqual("CATEGORIES");
 
     //Let's find the laptop category and click
-    await this.page
-      .locator(homeLocators.laptopCategory)
-      .waitFor({ state: "visible" });
-    productCategory = await this.page
-      .locator(homeLocators.laptopCategory)
-      .textContent();
-    await this.page.locator(homeLocators.laptopCategory).click();
+    await this.laptopCategory.waitFor({ state: "visible" });
+    productCategory = await this.laptopCategory.textContent();
+    await this.laptopCategory.click();
     await this.page.waitForTimeout(1000);
   }
 
@@ -106,13 +100,9 @@ export class HomePage {
     expect(categoryTitle).toEqual("CATEGORIES");
 
     //Let's find the monitor category and click
-    await this.page
-      .locator(homeLocators.monitorCategory)
-      .waitFor({ state: "visible" });
-    productCategory = await this.page
-      .locator(homeLocators.monitorCategory)
-      .textContent();
-    await this.page.locator(homeLocators.monitorCategory).click();
+    await this.monitorCategory.waitFor({ state: "visible" });
+    productCategory = await this.monitorCategory.textContent();
+    await this.monitorCategory.click();
     await this.page.waitForTimeout(1000);
   }
 
