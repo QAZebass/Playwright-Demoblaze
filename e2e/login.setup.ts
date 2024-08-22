@@ -8,7 +8,6 @@ dotenv.config({ path: './.env.Demoblaze' });
 const authFile = "./e2e/playwright/.auth/user.json";
 setup("log in", async ({ page }) => {
 
-
   const username = process.env.USER_NAME;
   const password = process.env.PASSWORD;
 
