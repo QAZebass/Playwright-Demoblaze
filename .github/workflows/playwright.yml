@@ -44,14 +44,13 @@ jobs:
 
       - name: Run tests for Demoblaze 🧩
         run: |
-          cd ./suits/Demoblaze/tests
+          cd ./e2e
           yarn install
           xvfb-run npx playwright test
     
 
       - name: Install Demoblaze artifact 📊   
         uses: actions/upload-artifact@v4.3.3
-        if: github.ref == 'refs/heads/Demoblaze'
         with:
             name: playwright-report 
             path: playwright-report/ 
