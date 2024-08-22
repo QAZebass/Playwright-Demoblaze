@@ -41,6 +41,10 @@ export class LoginPage {
     await this.page.waitForTimeout(2000);
   }
 
+  async clickOnLogOut() {
+    await this.log;
+  }
+
   async alertListener() {
     this.page.on("dialog", async (dialog) => {
       const message = dialog.message();

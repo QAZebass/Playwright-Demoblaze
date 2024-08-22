@@ -1,11 +1,10 @@
-import dotenv from "dotenv";
-import { test as setup } from "@playwright/test";
-import { Header } from './pages/header';
-import { LoginPage } from './pages/loginPage';
-dotenv.config({ path: './.env.Demoblaze' });
+import { test as setup } from '@playwright/test';
+import { Header } from '../pages/header';
+import { LoginPage } from '../pages/loginPage';
+
 
 // UI LOGIN
-const authFile = "./e2e/playwright/.auth/user.json";
+const authFile = "./e2e/playwright/.auth/user1.json";
 setup("log in", async ({ page }) => {
 
   const username = process.env.USER_NAME;
