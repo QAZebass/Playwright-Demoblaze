@@ -1,5 +1,4 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { cartLocators } from "../Locators/cart";
 import { faker } from "@faker-js/faker";
 
 export let cartProductTable: any[] = [];
@@ -101,7 +100,7 @@ export class cartPage {
     const title = await this.cartTitle.textContent();
     expect(title).toMatch("Products");
 
-    const rows = await this.page.$$(cartLocators.tableRows);
+    const rows = await this.page.$$('[class="success"]');
     const totalInCart = await this.totalPrice.textContent();
     totalPriceInCart = +totalInCart!;
     cartProductTable.push(`Total price from cart: ${totalPriceInCart}`);
