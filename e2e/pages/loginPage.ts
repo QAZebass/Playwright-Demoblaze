@@ -3,7 +3,9 @@ export let alertMessage = "";
 
 export class LoginPage {
   page: Page;
-  private usernameTitle: Locator;
+
+  private logInModalTitle: Locator;
+  private userNameTitle: Locator;
   private usernameInput: Locator;
   private passwordTitle: Locator;
   private passwordInput: Locator;
@@ -14,17 +16,20 @@ export class LoginPage {
   constructor(page: Page) {
     this.page = page;
 
-    this.usernameTitle = page.locator('[for="log-name"]');
-    this.usernameInput = page.locator('[id="loginusername"]');
-    this.passwordTitle = page.locator('label[for="log-pass"]');
-    this.passwordInput = page.locator('[id="loginpassword"]');
+    this.logInModalTitle = this.page.getByRole('heading', { name: 'Log in' });
+    this.userNameTitle = this.page.locator('[for="log-name"]:has-text("Username:")');
+    this.usernameInput = this.page.locator('input[id="loginusername"]');
+    this.passwordTitle = this.page.locator('[for="log-pass"]:has-text("Password:")');
+    this.passwordInput = this.page.locator('input[id="loginpassword"]');
     this.closeButton = page.locator('button[type="button"]');
     this.logInButton = page.locator('button[class="btn btn-primary"]:has-text("Log in")');
     this.footerWrapper = page.locator('[class="modal-footer"]');
   }
 
   async typeInUsername(username: string) {
-    const usernameTitle = await this.usernameTitle.textContent();
+    const logInTitle = await this.logInModalTitle.textContent();
+    expect(logInTitle).toEqual('Log in');
+    const usernameTitle = await this.userNameTitle.textContent();
     expect(usernameTitle).toEqual("Username:");
     await this.usernameInput.fill(username);
   }
@@ -32,7 +37,6 @@ export class LoginPage {
     const passwordTitle = await this.passwordTitle.first().textContent();
     expect(passwordTitle).toEqual("Password:");
     await this.passwordInput.fill(password);
-    await this.page.waitForTimeout(1000);
   }
 
   async clickLogIn() {
@@ -41,9 +45,6 @@ export class LoginPage {
     await this.page.waitForTimeout(2000);
   }
 
-  async clickOnLogOut() {
-    await this.log;
-  }
 
   async alertListener() {
     this.page.on("dialog", async (dialog) => {
