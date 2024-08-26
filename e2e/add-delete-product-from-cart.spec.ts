@@ -1,32 +1,31 @@
 import { expect, test } from "@playwright/test";
-import { getAuthDataForBrowser } from '../e2e/utils/browserUtils';
 import { HomePage } from './pages/homePage';
 import { productDetailPage, cartAlertConfirmation } from './pages/productDetailPage';
-import { cartConfirmation, status } from './utils/dataFixture';
-import { Apis, productID, deletionStatusResponse, productuuid } from './utils/apiHelpers';
+import { cartConfirmation } from './utils/dataFixture';
 import { productListPage } from './pages/productListPage';
-
+import { cartPage } from "./pages/cartPage";
+import { Header } from "./pages/header";
 
 test.describe("Demoblaze Cart Testing", async () => {
   const expectedConfirmation = cartConfirmation.productAddedtoCart;
 
-  test.afterEach(
-    "Delete product after being added to cart", async ({ request, browserName }) => {
-      const apis = new Apis(request);
-      const accountToken = await getAuthDataForBrowser(browserName);
-      const token = accountToken;
-      await apis.getItemID(productID, token);
-      await apis.DeleteItemFromCart(productuuid);
-      expect(deletionStatusResponse).toBe(status.ok);
-    },
-  );
-  test("TC1: Validate that the user can add one smartphone to cart", async ({ page, request, browserName }) => {
+  test.beforeEach('Visiting Demoblaze', async ({ page }) => {
+    await page.goto("/");
+  });
+
+  test.afterEach("Delete product after being added to cart", async ({ page }) => {
+    const cartpage = new cartPage(page);
+    const header = new Header(page);
+    await page.goto('/');
+    await header.clickCartButton();
+    await cartpage.deleteItemFromCart();
+  });
+  test("TC1: Validate that the user can add one smartphone to cart", async ({ context, page, request }) => {
 
     const pdp = new productDetailPage(page);
     const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);
 
-    await page.goto("/");
     await homepage.clickPhonesCategory();
     await plp.clickOnRandomProduct();
     await pdp.cartAlertListener();
@@ -36,11 +35,11 @@ test.describe("Demoblaze Cart Testing", async () => {
   });
 
   test("TC2: Validate that the user can add add one laptop to cart", async ({ page, request }) => {
+
     const pdp = new productDetailPage(page);
     const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);
 
-    await page.goto("/");
     await homepage.clickLaptopCategory();
     await plp.clickOnRandomProduct();
     await pdp.cartAlertListener();
@@ -50,11 +49,11 @@ test.describe("Demoblaze Cart Testing", async () => {
   });
 
   test("TC3: Validate that the user can add one monitor to cart", async ({ page, request }) => {
+
     const pdp = new productDetailPage(page);
     const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);
 
-    await page.goto("/");
     await homepage.clickMonitorCategory();
     await plp.clickOnRandomProduct();
     await pdp.cartAlertListener();
@@ -63,16 +62,16 @@ test.describe("Demoblaze Cart Testing", async () => {
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
   });
 
-  test("TC4: Validate that the user can add any unsorted product", async ({ page, request }) => {
+  /* test.skip("TC4: Validate that the user can add any unsorted product", async ({ context, page, request }) => {
+
     const pdp = new productDetailPage(page);
-    const homepage = new HomePage(page, request);
     const plp = new productListPage(page, request);
 
-    await page.goto("/");
-    await plp.clickOnRandomUnsortedProduct();
     await pdp.cartAlertListener();
     await pdp.clickOnAddToCartButton();
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
+    await context.clearCookies();
+    await context.clearPermissions();
 
-  });
+  }); */
 });

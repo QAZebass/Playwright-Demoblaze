@@ -26,6 +26,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
+
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like await page.goto('/'). */
@@ -38,6 +39,7 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    //SETUPS
     {
       name: "setup",
       testMatch: 'login.setup.ts',
@@ -53,11 +55,13 @@ export default defineConfig({
       testMatch: 'login.setup3.ts',
       testDir: './e2e/setups',
     },
+    //PROJECTS
     {
       name: 'Demoblaze E2E tests in Chrome',
       testDir: './e2e',
       use: {
         ...devices['Desktop Chrome'],
+        headless: true,
         storageState: './e2e/playwright/.auth/user1.json'
       },
       dependencies: ['setup'],
@@ -67,6 +71,7 @@ export default defineConfig({
       name: 'Demoblaze E2E tests on Firefox',
       use: {
         ...devices['Desktop Firefox'],
+        headless: true,
         storageState: './e2e/playwright/.auth/user2.json'
       },
       dependencies: ['setup2'],
@@ -76,6 +81,7 @@ export default defineConfig({
       name: 'Demoblaze E2E tests on Safari',
       use: {
         ...devices['Desktop Safari'],
+        headless: true,
         storageState: './e2e/playwright/.auth/user3.json'
       },
       dependencies: ['setup3'],

@@ -1,18 +1,16 @@
 import { Page, Locator, expect, APIRequestContext } from "@playwright/test";
 import { productListPage } from "./productListPage";
 import { productDetailPage } from "./productDetailPage";
+import { Header } from "./header";
 
 export var productCat: string;
 export var productCategory: any;
 
 export class HomePage {
   page: Page;
+  private header: Header;
   private pdp: productDetailPage;
   private plp: productListPage;
-  private logInButton: Locator;
-  private welcomeUserText: Locator;
-  private homeButton: Locator;
-  private productTitles: Locator;
   private categoryWrapper: Locator;
   private categoryTitle: Locator;
   private phonesCategory: Locator;
@@ -30,7 +28,7 @@ export class HomePage {
     this.page = page;
     this.pdp = new productDetailPage(page);
     this.plp = new productListPage(page, request);
-    this.productTitles = page.locator('[class="card h-100"]');
+    this.header = new Header(page);
     this.categoryWrapper = page.locator('[class="list-group"]');
     this.categoryTitle = page.locator('[id="cat"]');
 
@@ -45,31 +43,17 @@ export class HomePage {
     this.laptopCategory = page.locator('[id="itemc"]:has-text("Laptops")');
     this.monitorCategory = page.locator('[id="itemc"]:has-text("Monitors")');
 
-    this.homeButton = page.locator('[class="nav-item active"]');
   }
 
-  async clickOnLogIn() {
-    await this.logInButton.waitFor({ state: "visible" });
-    this.logInButton.click();
-  }
-  async logInAssertion(user: string) {
-    await this.welcomeUserText.waitFor();
-    const text = await this.welcomeUserText.textContent();
-    expect(text).toEqual(`Welcome ${user}`);
-  }
-  async clickOnHome() {
-    await this.homeButton.waitFor();
-    this.homeButton.click();
-  }
   async clickPhonesCategory() {
+
+    await this.header.waitForLoginState();
     productCat = "phone";
 
-    //We are in the right place
-    await this.categoryWrapper.waitFor({ timeout: 1500 });
+    await this.categoryWrapper.waitFor({ state: 'visible' });
     const categoryTitle = await this.categoryTitle.textContent();
     expect(categoryTitle).toEqual("CATEGORIES");
 
-    //Let's find the button and click
     await this.phonesCategory.waitFor({ state: "visible" });
     productCategory = await this.phonesCategory.textContent();
     await this.phonesCategory.click();
@@ -77,14 +61,13 @@ export class HomePage {
   }
 
   async clickLaptopCategory() {
+    await this.header.waitForLoginState();
     productCat = "notebook";
 
-    //We are in the right place
-    await this.categoryWrapper.waitFor({ timeout: 1500 });
+    await this.categoryWrapper.waitFor({ state: 'visible' });
     const categoryTitle = await this.categoryTitle.textContent();
     expect(categoryTitle).toEqual("CATEGORIES");
 
-    //Let's find the laptop category and click
     await this.laptopCategory.waitFor({ state: "visible" });
     productCategory = await this.laptopCategory.textContent();
     await this.laptopCategory.click();
@@ -92,14 +75,13 @@ export class HomePage {
   }
 
   async clickMonitorCategory() {
+    await this.header.waitForLoginState();
     productCat = "monitor";
 
-    //We are in the right place
-    await this.categoryWrapper.waitFor({ timeout: 1500 });
+    await this.categoryWrapper.waitFor({ state: 'visible' });
     const categoryTitle = await this.categoryTitle.textContent();
     expect(categoryTitle).toEqual("CATEGORIES");
 
-    //Let's find the monitor category and click
     await this.monitorCategory.waitFor({ state: "visible" });
     productCategory = await this.monitorCategory.textContent();
     await this.monitorCategory.click();

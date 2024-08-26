@@ -1,30 +1,25 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { faker } from "@faker-js/faker";
-
-export let cartProductTable: any[] = [];
+import { selectedProductDetails } from "./productDetailPage";
+import { product } from "./productListPage";
+export let productDetailsInTable: any[] = [];
 export let cartAlertConfirmation = "";
 export let totalPriceInCart: any;
-export const name = faker.person.firstName();
-export const country = faker.location.country();
-export const city = faker.location.city();
-export const creditCard = faker.finance.creditCardNumber();
-export const month = faker.date.month();
-export const year = "2024";
+let intPrices: any[] = [];
+let pricesSum: number;
 
 export class cartPage {
-  private cartButton: Locator;
-  private cartTitle: Locator;
-  private productName: Locator;
-  private productPrice: Locator;
-  private tableTitleProduct: Locator;
-  private tablePriceProduct: Locator;
+  page: Page;
   private table: Locator;
   private tableRows: Locator;
+  private deleteButton: Locator;
+  private cartTitle: Locator;
+  private productTitlesInTable: Locator;
+  private productPricesInTable: Locator;
   private totalPrice: Locator;
   private placeOrderButton: Locator;
 
   //order modal
-  page: Page;
+
   private oderModal: Locator;
   private price: Locator;
   private nameInput: Locator;
@@ -40,18 +35,19 @@ export class cartPage {
   private thankYouMessage: Locator;
   private okButton: Locator;
 
+
   constructor(page: Page) {
     this.page = page;
-    this.cartTitle = this.page.locator('[class="col-lg-8"] h2');
-    this.productName = this.page.locator('[class="success"] td >> nth=1');
-    this.productPrice = this.page.locator('[class="success"] td >> nth=2');
+    this.cartTitle = this.page.getByText('Products', { exact: true });
     //PRODUCT TABLE
-    this.table = this.page.locator('[class="table-responsive"]');
-    this.tableTitleProduct = this.page.locator('th:has-text("Title")');
-    this.tablePriceProduct = this.page.locator('th:has-text("Price")');
+    this.table = this.page.locator('[id="tbodyid"]');
+    this.tableRows = this.page.locator('tr[class="success"]');
+    this.deleteButton = this.page.locator('td a');
     this.totalPrice = this.page.locator("div h3");
-    this.placeOrderButton = this.page.locator('button:has-text("Place Order")');
-    //order modal
+    this.productTitlesInTable = this.page.locator('tr td:nth-child(2)');
+    this.productPricesInTable = this.page.locator('tr td:nth-child(3)');
+    this.placeOrderButton = this.page.getByRole('button', { name: "Place Order" });
+    //ORDER MODAL
     this.oderModal = this.page.locator('[id="orderModal"]');
     this.price = this.page.locator('[id="totalm"]');
     this.nameInput = this.page.locator('[id="name"]');
@@ -61,80 +57,38 @@ export class cartPage {
     this.monthInput = this.page.locator('[id="month"]');
     this.yearInput = this.page.locator('[id="year"]');
     this.modalFooter = this.page.locator('[class="modal-content"] >> nth=2');
-    this.purchaseButton = this.page.locator('[class="modal-content"] >> nth=2 >> button:has-text("Purchase")');
-    this.closeButton = this.page.locator('[class="modal-content"] >> nth=2 >> button:has-text("Close")');
+    this.purchaseButton = this.page.getByRole('button', { name: "Purchase" });
+    this.closeButton = this.page.getByRole('button', { name: "Close" });
     this.thankYouModal = this.page.locator('[class$="showSweetAlert visible"]');
     this.thankYouMessage = this.page.locator('[class$="showSweetAlert visible"] h2');
-    this.okButton = this.page.locator('[class$="showSweetAlert visible"] button:not(.cancel.btn.btn-lg.btn-default)');
+    this.okButton = this.page.getByRole('button', { name: 'OK' });
   }
 
-  async validateProductInformation(
-    product1: string,
-    price1: any,
-    product2: string,
-    price2: any,
-  ) {
-    for (let i = 0; i <= cartProductTable.length - 1; i++) {
-      if (cartProductTable[i].name === product1) {
-        const productname = cartProductTable[i].name;
-        const productprice = cartProductTable[i].price;
-        expect(productname).toEqual(product1);
-        expect(productprice).toEqual(price1);
-      } else if (cartProductTable[i].name === product2) {
-        const productname = cartProductTable[i].name;
-        const productprice = cartProductTable[i].price;
-        expect(productname).toEqual(product2);
-        expect(productprice).toEqual(price2);
-      }
-    }
+
+  async gettingProductInfoInCart() {
+    await this.cartTitle.waitFor({ state: 'visible' });
+    await expect(this.table).toBeVisible();
+
+    const products = await this.productTitlesInTable.evaluateAll(products => products.map(product => product.textContent?.trim()));
+    products.forEach(product => productDetailsInTable.push(product));
+    const prices = await this.productPricesInTable.evaluateAll(prices => prices.map(price => price.textContent?.trim()));
+    prices.forEach(price => { const ints = Number(price); intPrices.push(ints); });
+    prices.forEach(price => productDetailsInTable.push(price));
+    pricesSum = intPrices[0] + intPrices[1];
+    expect(selectedProductDetails).toEqual(expect.arrayContaining(productDetailsInTable));
   }
 
-  async clickOnPlaceOrderButton(
-    product1: string,
-    price1: any,
-    product2: string,
-    price2: any,
-  ) {
-    await this.page.waitForTimeout(1500);
-    await this.cartTitle.waitFor();
-    const title = await this.cartTitle.textContent();
-    expect(title).toMatch("Products");
-
-    const rows = await this.page.$$('[class="success"]');
-    const totalInCart = await this.totalPrice.textContent();
-    totalPriceInCart = +totalInCart!;
-    cartProductTable.push(`Total price from cart: ${totalPriceInCart}`);
-
-    for (let i = 0; i <= rows.length - 1; i++) {
-      const productNameOnChart = await this.page
-        .locator(`[class="success"] >> nth=${i} >> td >> nth=1`)
-        .textContent();
-      const priceOnChart = await this.page
-        .locator(`[class="success"] >> nth=${i} >> td >> nth=2`)
-        .textContent();
-
-      cartProductTable.push({ Name: productNameOnChart, Price: priceOnChart });
-    }
-
-    console.log(cartProductTable);
-    this.validateProductInformation(product1, price1, product2, price2);
+  async clickOnPlaceOrderButton() {
     await this.placeOrderButton.waitFor();
     await this.placeOrderButton.click();
   }
 
-  async fillOrderModal(
-    price: any,
-    name: string,
-    country: string,
-    city: string,
-    creditCardNumber: string,
-    month: string,
-    year: string,
-  ) {
+  async fillOrderModal(name: string, country: string, city: string, creditCardNumber: string, month: string, year: string) {
+    await this.gettingProductInfoInCart();
     await this.oderModal.waitFor();
     const priceInModal = await this.price.textContent();
-    const justPrice = priceInModal.replace("Total: ", "");
-    expect(+justPrice).toEqual(price);
+    const justPrice = priceInModal!.replace("Total: ", "");
+    expect(+justPrice).toEqual(pricesSum);
     await this.nameInput.fill(name);
     await this.countryInput.fill(country);
     await this.cityInput.fill(city);
@@ -154,5 +108,17 @@ export class cartPage {
     expect(thanksMessage).toEqual(finishPurchaseMessage);
     await this.okButton.click();
     await this.thankYouModal.waitFor({ state: "hidden" });
+  }
+  async deleteItemFromCart() {
+    console.log(product);
+    await expect(this.table).toBeVisible();
+    const arrayOfRows = await this.tableRows.all();
+    for (let i = 0; i <= arrayOfRows.length - 1; i++) {
+      const productRow = await this.page.locator(`[class="success"] >> nth=${i} >> td >> nth=1`).textContent();
+      if (productRow === product) {
+        console.log("aca esta el producto");
+        await this.deleteButton.nth(i).click();
+      }
+    }
   }
 }

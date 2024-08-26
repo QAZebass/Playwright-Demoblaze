@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import { getAuthDataForBrowser } from '../e2e/utils/browserUtils';
 import { test, expect } from "@playwright/test";
 import { Header } from './pages/header';
 import { LoginPage } from './pages/loginPage';
