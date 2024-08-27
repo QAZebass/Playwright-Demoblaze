@@ -1,4 +1,4 @@
-import { Page, Locator, expect, APIRequestContext } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import { productListPage } from "./productListPage";
 import { productDetailPage } from "./productDetailPage";
 import { Header } from "./header";
@@ -24,10 +24,10 @@ export class HomePage {
   private laptopCategory: Locator;
   private monitorCategory: Locator;
 
-  constructor(page: Page, request: APIRequestContext) {
+  constructor(page: Page) {
     this.page = page;
     this.pdp = new productDetailPage(page);
-    this.plp = new productListPage(page, request);
+    this.plp = new productListPage(page);
     this.header = new Header(page);
     this.categoryWrapper = page.locator('[class="list-group"]');
     this.categoryTitle = page.locator('[id="cat"]');

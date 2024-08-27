@@ -1,5 +1,6 @@
-import { Page, Locator, APIRequestContext } from "@playwright/test";
-import { productCat, productCategory } from "./homePage";
+import { Page, Locator } from "@playwright/test";
+import { productCategory } from "./homePage";
+import { Header } from "./header";
 
 export let product: any;
 function getRandomNumber(min, max) {
@@ -10,8 +11,10 @@ export class productListPage {
   page: Page;
   private productsArray: Locator;
   private allProductsWrapper: Locator;
+  private header: Header;
 
-  constructor(page: Page, request: APIRequestContext) {
+  constructor(page: Page) {
+    this.header = new Header(page);
     this.page = page;
     this.productsArray = this.page.locator('a[class="hrefch"]');
     this.allProductsWrapper = this.page.locator('[id="tbodyid"]');
@@ -19,6 +22,7 @@ export class productListPage {
 
   async clickOnRandomProduct() {
 
+    await this.header.waitForLoginState();
     await this.allProductsWrapper.waitFor({ state: 'visible' });
     const arrayOfProductTitles = await this.productsArray.all();
     const randomProductNumber = getRandomNumber(0, arrayOfProductTitles.length - 1);
@@ -26,8 +30,7 @@ export class productListPage {
     await this.productsArray.nth(randomProductNumber).waitFor({ state: 'visible', timeout: 2000 });
     product = await this.productsArray.nth(randomProductNumber).textContent();
     console.log(`The selected product is: ${product}`);
-    await this.productsArray.nth(randomProductNumber).click({ timeout: 500 });
-    return { productCat, product };
+    await this.productsArray.nth(randomProductNumber).click({ timeout: 1500 });
   }
 
 
