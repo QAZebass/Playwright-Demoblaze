@@ -1,5 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { selectedProductDetails } from "./productDetailPage";
+import { Header } from "./header";
 import { product } from "./productListPage";
 export let productDetailsInTable: any[] = [];
 export let cartAlertConfirmation = "";
@@ -8,6 +9,7 @@ let intPrices: any[] = [];
 let pricesSum: number;
 
 export class cartPage {
+  private header: Header;
   page: Page;
   private table: Locator;
   private tableRows: Locator;
@@ -38,6 +40,7 @@ export class cartPage {
 
   constructor(page: Page) {
     this.page = page;
+    this.header = new Header(page);
     this.cartTitle = this.page.getByText('Products', { exact: true });
     //PRODUCT TABLE
     this.table = this.page.locator('[id="tbodyid"]');
@@ -110,15 +113,21 @@ export class cartPage {
     await this.thankYouModal.waitFor({ state: "hidden" });
   }
   async deleteItemFromCart() {
-    console.log(product);
-    await expect(this.table).toBeVisible();
+    await this.header.waitForLoginState();
+    await this.table.waitFor({ state: 'visible' });
     const arrayOfRows = await this.tableRows.all();
     for (let i = 0; i <= arrayOfRows.length - 1; i++) {
       const productRow = await this.page.locator(`[class="success"] >> nth=${i} >> td >> nth=1`).textContent();
       if (productRow === product) {
-        console.log("aca esta el producto");
-        await this.deleteButton.nth(i).click();
+        console.log("Product found in the cart.");
+        await this.deleteButton.nth(i).click({ timeout: 2000 });
+
+        await this.page.locator(`[class="success"] >> nth=${i}`).waitFor({ state: 'detached' });
+        console.log("Product successfully deleted from the cart.");
+
+        break;
       }
     }
   }
+
 }

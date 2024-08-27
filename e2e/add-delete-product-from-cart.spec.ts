@@ -5,26 +5,26 @@ import { cartConfirmation } from './utils/dataFixture';
 import { productListPage } from './pages/productListPage';
 import { cartPage } from "./pages/cartPage";
 import { Header } from "./pages/header";
-
+const expectedConfirmation = cartConfirmation.productAddedtoCart;
 test.describe("Demoblaze Cart Testing", async () => {
-  const expectedConfirmation = cartConfirmation.productAddedtoCart;
+
 
   test.beforeEach('Visiting Demoblaze', async ({ page }) => {
     await page.goto("/");
   });
 
-  test.afterEach("Delete product after being added to cart", async ({ page }) => {
+  test.afterEach("Delete product after being added to cart @sequential", async ({ page }) => {
     const cartpage = new cartPage(page);
     const header = new Header(page);
     await page.goto('/');
     await header.clickCartButton();
     await cartpage.deleteItemFromCart();
   });
-  test("TC1: Validate that the user can add one smartphone to cart", async ({ context, page, request }) => {
+  test("TC1: Validate that the user can add one smartphone to cart @sequential", async ({ page }) => {
 
     const pdp = new productDetailPage(page);
-    const homepage = new HomePage(page, request);
-    const plp = new productListPage(page, request);
+    const homepage = new HomePage(page);
+    const plp = new productListPage(page);
 
     await homepage.clickPhonesCategory();
     await plp.clickOnRandomProduct();
@@ -34,11 +34,11 @@ test.describe("Demoblaze Cart Testing", async () => {
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
   });
 
-  test("TC2: Validate that the user can add add one laptop to cart", async ({ page, request }) => {
+  test("TC2: Validate that the user can add add one laptop to cart @sequential", async ({ page }) => {
 
     const pdp = new productDetailPage(page);
-    const homepage = new HomePage(page, request);
-    const plp = new productListPage(page, request);
+    const homepage = new HomePage(page);
+    const plp = new productListPage(page);
 
     await homepage.clickLaptopCategory();
     await plp.clickOnRandomProduct();
@@ -48,11 +48,11 @@ test.describe("Demoblaze Cart Testing", async () => {
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
   });
 
-  test("TC3: Validate that the user can add one monitor to cart", async ({ page, request }) => {
+  test("TC3: Validate that the user can add one monitor to cart @sequential", async ({ page }) => {
 
     const pdp = new productDetailPage(page);
-    const homepage = new HomePage(page, request);
-    const plp = new productListPage(page, request);
+    const homepage = new HomePage(page);
+    const plp = new productListPage(page);
 
     await homepage.clickMonitorCategory();
     await plp.clickOnRandomProduct();
@@ -62,16 +62,16 @@ test.describe("Demoblaze Cart Testing", async () => {
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
   });
 
-  /* test.skip("TC4: Validate that the user can add any unsorted product", async ({ context, page, request }) => {
+  test("TC4: Validate that the user can add any unsorted product @sequential", async ({ context, page }) => {
 
     const pdp = new productDetailPage(page);
-    const plp = new productListPage(page, request);
+    const plp = new productListPage(page);
 
+    await plp.clickOnRandomProduct();
     await pdp.cartAlertListener();
     await pdp.clickOnAddToCartButton();
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
-    await context.clearCookies();
-    await context.clearPermissions();
 
-  }); */
+
+  });
 });

@@ -17,7 +17,7 @@ export default defineConfig({
 
   testDir: './e2e',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -45,7 +45,7 @@ export default defineConfig({
       testMatch: 'login.setup.ts',
       testDir: './e2e/setups',
     },
-    {
+    /* {
       name: "setup2",
       testMatch: 'login.setup2.ts',
       testDir: './e2e/setups',
@@ -54,7 +54,7 @@ export default defineConfig({
       name: "setup3",
       testMatch: 'login.setup3.ts',
       testDir: './e2e/setups',
-    },
+    }, */
     //PROJECTS
     {
       name: 'Demoblaze E2E tests in Chrome',
@@ -67,7 +67,7 @@ export default defineConfig({
       dependencies: ['setup'],
     },
 
-    {
+    /* {
       name: 'Demoblaze E2E tests on Firefox',
       use: {
         ...devices['Desktop Firefox'],
@@ -85,7 +85,7 @@ export default defineConfig({
         storageState: './e2e/playwright/.auth/user3.json'
       },
       dependencies: ['setup3'],
-    },
+    }, */
 
     /* Test against mobile viewports. */
     // {

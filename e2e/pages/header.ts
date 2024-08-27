@@ -50,6 +50,6 @@ export class Header {
     expect(text!).toEqual(`Welcome ${expectedUser}`);
   }
   async waitForLoginState() {
-    await this.welcomeUser.waitFor({ state: 'visible' });
+    await this.welcomeUser.waitFor({ state: 'visible', timeout: 2000 });
   }
 }
