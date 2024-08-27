@@ -13,14 +13,14 @@ test.describe("Demoblaze Cart Testing", async () => {
     await page.goto("/");
   });
 
-  test.afterEach("Delete product after being added to cart @sequential", async ({ page }) => {
+  test.afterEach("Delete product after being added to cart", async ({ page }) => {
     const cartpage = new cartPage(page);
     const header = new Header(page);
     await page.goto('/');
     await header.clickCartButton();
     await cartpage.deleteItemFromCart();
   });
-  test("TC1: Validate that the user can add one smartphone to cart @sequential", async ({ page }) => {
+  test("TC1: Validate that the user can add one smartphone to cart", async ({ page }) => {
 
     const pdp = new productDetailPage(page);
     const homepage = new HomePage(page);
@@ -34,7 +34,7 @@ test.describe("Demoblaze Cart Testing", async () => {
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
   });
 
-  test("TC2: Validate that the user can add add one laptop to cart @sequential", async ({ page }) => {
+  test("TC2: Validate that the user can add add one laptop to cart", async ({ page }) => {
 
     const pdp = new productDetailPage(page);
     const homepage = new HomePage(page);
@@ -48,7 +48,7 @@ test.describe("Demoblaze Cart Testing", async () => {
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
   });
 
-  test("TC3: Validate that the user can add one monitor to cart @sequential", async ({ page }) => {
+  test("TC3: Validate that the user can add one monitor to cart", async ({ page }) => {
 
     const pdp = new productDetailPage(page);
     const homepage = new HomePage(page);
@@ -62,7 +62,7 @@ test.describe("Demoblaze Cart Testing", async () => {
     expect(cartAlertConfirmation).toEqual(expectedConfirmation);
   });
 
-  test("TC4: Validate that the user can add any unsorted product @sequential", async ({ context, page }) => {
+  test("TC4: Validate that the user can add any unsorted product", async ({ context, page }) => {
 
     const pdp = new productDetailPage(page);
     const plp = new productListPage(page);
