@@ -1,7 +1,7 @@
 
 
-
-`Playwright-Demoblaze
+`
+Playwright-Demoblaze
 ├── .env.Demoblaze
 ├── .github
 │   └── workflows
@@ -34,4 +34,5 @@
 │       └── dataGenerator.ts
 ├── playwright.config.ts
 ├── README.md
-└── yarn.lock`
+└── yarn.lock
+`
