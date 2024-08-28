@@ -1,5 +1,4 @@
 import { test, expect, APIRequestContext } from "@playwright/test";
-import { status } from "./dataFixture";
 export let selectedUnsortedProductDetails: any[] = [];
 export let parsedResponse: string;
 export let id: string = "";
