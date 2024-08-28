@@ -1,5 +1,4 @@
-# Playwright-Demoblaze
-
+![github-header-image](https://github.com/user-attachments/assets/83613e35-5377-4e9f-8ef5-5acac13994ee)
 
 ## Folder Structure
 
