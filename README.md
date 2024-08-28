@@ -1,6 +1,5 @@
-               ![github-header-image](https://github.com/user-attachments/assets/83613e35-5377-4e9f-8ef5-5acac13994ee)
+![github-header-image (1)](https://github.com/user-attachments/assets/6291fc8e-14a7-4621-a82e-5952a86c481f)
 
-## Folder Structure
 
 Playwright-Demoblaze
 ├── .env.Demoblaze
