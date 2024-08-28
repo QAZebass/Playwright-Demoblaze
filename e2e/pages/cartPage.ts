@@ -1,7 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { selectedProductDetails } from "./productDetailPage";
 import { Header } from "./header";
-import { product } from "./productListPage";
 export let productDetailsInTable: any[] = [];
 export let cartAlertConfirmation = "";
 export let totalPriceInCart: any;
@@ -69,9 +68,11 @@ export class cartPage {
 
 
   async gettingProductInfoInCart() {
+
     await this.cartTitle.waitFor({ state: 'visible' });
     await expect(this.table).toBeVisible();
-
+    const length = (await this.productTitlesInTable.all()).length;
+    expect(length).toBe(2);
     const products = await this.productTitlesInTable.evaluateAll(products => products.map(product => product.textContent?.trim()));
     products.forEach(product => productDetailsInTable.push(product));
     const prices = await this.productPricesInTable.evaluateAll(prices => prices.map(price => price.textContent?.trim()));
@@ -82,12 +83,13 @@ export class cartPage {
   }
 
   async clickOnPlaceOrderButton() {
+    await this.gettingProductInfoInCart();
     await this.placeOrderButton.waitFor();
     await this.placeOrderButton.click();
   }
 
   async fillOrderModal(name: string, country: string, city: string, creditCardNumber: string, month: string, year: string) {
-    await this.gettingProductInfoInCart();
+
     await this.oderModal.waitFor();
     const priceInModal = await this.price.textContent();
     const justPrice = priceInModal!.replace("Total: ", "");
@@ -112,7 +114,28 @@ export class cartPage {
     await this.okButton.click();
     await this.thankYouModal.waitFor({ state: "hidden" });
   }
-  async deleteItemFromCart() {
+
+  async checkingProductInCart(product: string | null): Promise<models.ProductInCart | undefined> {
+    await this.header.waitForLoginState();
+    await this.table.waitFor({ state: 'visible' });
+    const arrayOfRows = await this.tableRows.all();
+    for (let i = 0; i <= arrayOfRows.length - 1; i++) {
+      const rowProduct = await this.page.locator(`[class="success"] >> nth=${i} >> td >> nth=1`).textContent();
+      if (rowProduct === product) {
+        const productInCart = await this.productTitlesInTable.nth(i).textContent();
+        const cartProductPrice = await this.productPricesInTable.nth(i).textContent();
+        const informationObject: models.ProductInCart = {
+          productInCart: productInCart,
+          productPriceInCart: cartProductPrice
+        };
+        return informationObject;
+      }
+    }
+  }
+
+
+  async deleteItemFromCart(product: string | null) {
+
     await this.header.waitForLoginState();
     await this.table.waitFor({ state: 'visible' });
     const arrayOfRows = await this.tableRows.all();
@@ -120,6 +143,7 @@ export class cartPage {
       const productRow = await this.page.locator(`[class="success"] >> nth=${i} >> td >> nth=1`).textContent();
       if (productRow === product) {
         console.log("Product found in the cart.");
+        await this.deleteButton.nth(i).waitFor({ state: 'attached' });
         await this.deleteButton.nth(i).click({ timeout: 2000 });
 
         await this.page.locator(`[class="success"] >> nth=${i}`).waitFor({ state: 'detached' });

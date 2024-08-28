@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
-import { HomePage } from './pages/homePage';
 import { productDetailPage, cartAlertConfirmation } from './pages/productDetailPage';
-import { cartConfirmation } from './utils/dataFixture';
+import { staticData } from "../e2e/utils/dataFixture.json";
 import { productListPage } from './pages/productListPage';
 import { cartPage } from "./pages/cartPage";
 import { Header } from "./pages/header";
-const expectedConfirmation = cartConfirmation.productAddedtoCart;
+
 test.describe("Demoblaze Cart Testing", async () => {
+  let selectedProduct: string | any;
 
 
   test.beforeEach('Visiting Demoblaze', async ({ page }) => {
@@ -18,60 +18,26 @@ test.describe("Demoblaze Cart Testing", async () => {
     const header = new Header(page);
     await page.goto('/');
     await header.clickCartButton();
-    await cartpage.deleteItemFromCart();
-  });
-  test("TC1: Validate that the user can add one smartphone to cart", async ({ page }) => {
-
-    const pdp = new productDetailPage(page);
-    const homepage = new HomePage(page);
-    const plp = new productListPage(page);
-
-    await homepage.clickPhonesCategory();
-    await plp.clickOnRandomProduct();
-    await pdp.cartAlertListener();
-    await pdp.clickOnAddToCartButton();
-
-    expect(cartAlertConfirmation).toEqual(expectedConfirmation);
+    await cartpage.deleteItemFromCart(selectedProduct);
   });
 
-  test("TC2: Validate that the user can add add one laptop to cart", async ({ page }) => {
-
-    const pdp = new productDetailPage(page);
-    const homepage = new HomePage(page);
-    const plp = new productListPage(page);
-
-    await homepage.clickLaptopCategory();
-    await plp.clickOnRandomProduct();
-    await pdp.cartAlertListener();
-    await pdp.clickOnAddToCartButton();
-
-    expect(cartAlertConfirmation).toEqual(expectedConfirmation);
-  });
-
-  test("TC3: Validate that the user can add one monitor to cart", async ({ page }) => {
-
-    const pdp = new productDetailPage(page);
-    const homepage = new HomePage(page);
-    const plp = new productListPage(page);
-
-    await homepage.clickMonitorCategory();
-    await plp.clickOnRandomProduct();
-    await pdp.cartAlertListener();
-    await pdp.clickOnAddToCartButton();
-
-    expect(cartAlertConfirmation).toEqual(expectedConfirmation);
-  });
-
-  test("TC4: Validate that the user can add any unsorted product", async ({ context, page }) => {
+  test("TC1: Validate that the user can add any product to cart", async ({ page }) => {
 
     const pdp = new productDetailPage(page);
     const plp = new productListPage(page);
+    const header = new Header(page);
+    const cartpage = new cartPage(page);
 
-    await plp.clickOnRandomProduct();
+    const productInformation = await plp.clickOnRandomProduct();
+    selectedProduct = productInformation?.product;
     await pdp.cartAlertListener();
     await pdp.clickOnAddToCartButton();
-    expect(cartAlertConfirmation).toEqual(expectedConfirmation);
-
-
+    expect(cartAlertConfirmation).toEqual(staticData.cartConfirmation.productAddedtoCart);
+    await header.clickCartButton();
+    const informationObject = await cartpage.checkingProductInCart(selectedProduct);
+    expect(productInformation?.product).toEqual(informationObject?.productInCart);
+    expect(productInformation?.price).toEqual(`$${informationObject?.productPriceInCart}`);
   });
+
+
 });

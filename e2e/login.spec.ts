@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { test, expect } from "@playwright/test";
 import { Header } from './pages/header';
 import { LoginPage } from './pages/loginPage';
-import { invalidCredentials, errorMessage } from './utils/dataFixture';
+import { staticData } from './utils/dataFixture.json';
 import { alertMessage } from './pages/loginPage';
 dotenv.config();
 
@@ -28,8 +28,6 @@ test.describe("Log into Demoblaze", () => {
 
     test("TC2: Validate that the user can't login with wrong password", async ({ page }) => {
         const username = process.env.USER_NAME;
-        const wrongpass = invalidCredentials.invalidPassword;
-        const wrongLogin = errorMessage.wrongPass;
 
         const loginpage = new LoginPage(page);
         const header = new Header(page);
@@ -37,27 +35,25 @@ test.describe("Log into Demoblaze", () => {
         await page.goto('/');
         await header.clickLogInButton();
         await loginpage.typeInUsername(username!);
-        await loginpage.typeInPassword(wrongpass);
+        await loginpage.typeInPassword(staticData.invalidPassword);
         await loginpage.alertListener();
         await loginpage.clickLogIn();
-        expect(alertMessage).toMatch(wrongLogin);
+        expect(alertMessage).toMatch(staticData.errorMessage.wrongPass);
     });
 
     test("TC3: Validate that the user can't login with wrong username", async ({ page }) => {
-        const wrongUser = invalidCredentials.invalidUser;
         const password = process.env.PASSWORD;
-        const wrongLogin = errorMessage.wrongUser;
 
         const header = new Header(page);
         const loginpage = new LoginPage(page);
 
         await page.goto("/");
         await header.clickLogInButton();
-        await loginpage.typeInUsername(wrongUser);
+        await loginpage.typeInUsername(staticData.invalidUser);
         await loginpage.typeInPassword(password!);
         await loginpage.alertListener();
         await loginpage.clickLogIn();
-        expect(alertMessage).toMatch(wrongLogin);
+        expect(alertMessage).toMatch(staticData.errorMessage.wrongUser);
     });
 });
 

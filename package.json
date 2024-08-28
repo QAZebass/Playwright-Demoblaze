@@ -15,5 +15,7 @@
     "dotenv": "^16.4.5",
     "yarn": "^1.22.22"
   },
-  "scripts": {}
+  "scripts": {
+    "test": "playwright test --project=Demoblaze-E2E-tests-in-Chrome"
+  }
 }

@@ -1,0 +1,27 @@
+{
+  "staticData": {
+    "invalidPassword": "test123",
+    "invalidUser": "Zeba",
+    "url": {
+      "internxt": "https://drive.internxt.com/"
+    },
+    "titles": {
+      "contactListTitle": "Contact List",
+      "signUpTitle": "Not yet a user? Click here to sign up!",
+      "registerTitle": "Sign up to begin adding your contacts!"
+    },
+    "errorMessage": {
+      "wrongPass": "Wrong password",
+      "wrongUser": "User does not exist."
+    },
+    "cartConfirmation": {
+      "productAddedtoCart": "Product added."
+    },
+    "status": {
+      "ok": 200
+    },
+    "purchaseConfirmation": {
+      "message": "Thank you for your purchase!"
+    }
+  }
+}
