@@ -46,7 +46,7 @@ jobs:
 
       - name: Run tests for Demoblaze 🧩
         run: |
-          cd ./e2e
+          cd ./e2e/specs
           yarn install
           xvfb-run npx playwright test
     
