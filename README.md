@@ -49,14 +49,15 @@ As you see, this Testing Automation project uses Playwright + TS. The tests test
 ┃ ┃ ┣ 📜login.setup.ts
 ┃ ┃ ┣ 📜login.setup2.ts
 ┃ ┃ ┗ 📜login.setup3.ts
-┃ ┣ 📂utils
-┃ ┃ ┣ 📜apiHelpers.ts
-┃ ┃ ┣ 📜browserUtils.ts
-┃ ┃ ┣ 📜dataFixture.json
-┃ ┃ ┗ 📜dataGenerator.ts
-┃ ┣ 📜add-delete-product-from-cart.spec.ts
-┃ ┣ 📜complete-product-purchase.spec.ts
-┃ ┗ 📜login.spec.ts
+┃ ┣ 📂specs
+┃ ┃ ┣ 📜add-delete-product-from-cart.spec.ts
+┃ ┃ ┣ 📜complete-product-purchase.spec.ts
+┃ ┃ ┗ 📜login.spec.ts
+┃ ┗ 📂utils
+┃   ┣ 📜apiHelpers.ts
+┃   ┣ 📜browserUtils.ts
+┃   ┣ 📜dataFixture.json
+┃   ┗ 📜dataGenerator.ts
 ┣ 📜.env.Demoblaze
 ┣ 📜.gitignore
 ┣ 📜global.d.ts
@@ -65,4 +66,5 @@ As you see, this Testing Automation project uses Playwright + TS. The tests test
 ┣ 📜README.md
 ┣ 📜tsconfig.json
 ┗ 📜yarn.lock
+
 ```
