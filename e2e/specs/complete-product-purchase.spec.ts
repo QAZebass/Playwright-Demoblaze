@@ -1,16 +1,15 @@
-import { expect, test } from "@playwright/test";
-import { HomePage } from "./pages/homePage";
-import { staticData } from './utils/dataFixture.json';
-import { dataGenerator } from "./utils/dataGenerator";
-import { cartPage } from "./pages/cartPage";
-import { Header } from "./pages/header";
+import { test } from "@playwright/test";
+import { HomePage } from "../pages/homePage";
+import { staticData } from '../utils/dataFixture.json';
+import { dataGenerator } from "../utils/dataGenerator";
+import { cartPage } from "../pages/cartPage";
+import { Header } from "../pages/header";
 
 test.describe("Demoblaze Purchase Testing", async () => {
 
     test.beforeEach('Visiting Demoblaze', async ({ page }) => {
         await page.goto("/");
     });
-
 
     test("TC1: Validate that the user can complete the purchase of two items", async ({ page, context }) => {
 

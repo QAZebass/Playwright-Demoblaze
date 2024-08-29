@@ -16,13 +16,12 @@ export class productDetailPage {
   constructor(page: Page) {
     this.page = page;
     this.productInfoWrapper = this.page.locator('[class="row"]');
-    this.selectedProductName = this.page.locator('h2[class="name"]');
+    this.selectedProductName = this.page.locator('div h2[class="name"]');
     this.selectedProductPrice = this.page.locator('h3[class="price-container"]');
     this.addToCartButton = this.page.getByRole('link', { name: 'Add to cart' });
   }
 
   async clickOnAddToCartButton() {
-
     await this.productInfoWrapper.first().waitFor({ state: 'visible', timeout: 2000 });
     const selectedProduct = await this.selectedProductName.textContent();
     const selectedProductPrice = await this.selectedProductPrice.textContent();

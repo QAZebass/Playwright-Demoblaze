@@ -58,7 +58,7 @@ export default defineConfig({
     //PROJECTS
     {
       name: 'Demoblaze-E2E-tests-in-Chrome',
-      testDir: './e2e',
+      testDir: './e2e/specs',
       use: {
         ...devices['Desktop Chrome'],
         headless: true,

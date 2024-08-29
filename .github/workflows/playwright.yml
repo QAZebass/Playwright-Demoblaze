@@ -42,7 +42,7 @@ jobs:
           echo "PASSWORD=${{ secrets.PASSWORD }}" >> $GITHUB_ENV
 
       - name: Run login setup script
-        run: npx ts-node e2e/login.setup.ts    
+        run: npx ts-node e2e/setups/login.setup.ts    
 
       - name: Run tests for Demoblaze 🧩
         run: |

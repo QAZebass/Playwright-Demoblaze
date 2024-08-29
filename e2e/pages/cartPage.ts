@@ -115,43 +115,43 @@ export class cartPage {
     await this.thankYouModal.waitFor({ state: "hidden" });
   }
 
-  async checkingProductInCart(product: string | null): Promise<models.ProductInCart | undefined> {
+  async checkingProductInCart(product: string | null): Promise<models.ProductInfo | undefined> {
     await this.header.waitForLoginState();
     await this.table.waitFor({ state: 'visible' });
     const arrayOfRows = await this.tableRows.all();
     for (let i = 0; i <= arrayOfRows.length - 1; i++) {
-      const rowProduct = await this.page.locator(`[class="success"] >> nth=${i} >> td >> nth=1`).textContent();
+      const rowProduct = await this.productTitlesInTable.nth(i).textContent();
       if (rowProduct === product) {
         const productInCart = await this.productTitlesInTable.nth(i).textContent();
         const cartProductPrice = await this.productPricesInTable.nth(i).textContent();
-        const informationObject: models.ProductInCart = {
-          productInCart: productInCart,
-          productPriceInCart: cartProductPrice
+        const productsInfoInCart: models.ProductInfo = {
+          product: productInCart,
+          price: cartProductPrice
         };
-        return informationObject;
+        return productsInfoInCart;
       }
     }
   }
 
 
-  async deleteItemFromCart(product: string | null) {
+  async deleteItemFromCart(product: string | null): Promise<Locator | undefined> {
 
     await this.header.waitForLoginState();
     await this.table.waitFor({ state: 'visible' });
     const arrayOfRows = await this.tableRows.all();
     for (let i = 0; i <= arrayOfRows.length - 1; i++) {
-      const productRow = await this.page.locator(`[class="success"] >> nth=${i} >> td >> nth=1`).textContent();
+      const productRow = await this.productTitlesInTable.nth(i).textContent();
       if (productRow === product) {
         console.log("Product found in the cart.");
         await this.deleteButton.nth(i).waitFor({ state: 'attached' });
         await this.deleteButton.nth(i).click({ timeout: 2000 });
-
-        await this.page.locator(`[class="success"] >> nth=${i}`).waitFor({ state: 'detached' });
-        console.log("Product successfully deleted from the cart.");
-
-        break;
+        const productLocator: Locator = this.productTitlesInTable.nth(i);
+        return productLocator;
       }
     }
+  }
+  async waitForTable() {
+    await this.table.waitFor({ state: 'visible' });
   }
 
 }
