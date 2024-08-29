@@ -1,4 +1,4 @@
-<h1 align="left">Sebastian Avila's Playwright Testing Project</h1>
+![github-header-image](https://github.com/user-attachments/assets/f161885f-daef-462e-b596-e559059bfde6)
 
 ###
 
