@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import { test, expect } from "@playwright/test";
-import { Header } from './pages/header';
-import { LoginPage } from './pages/loginPage';
-import { staticData } from './utils/dataFixture.json';
-import { alertMessage } from './pages/loginPage';
+import { Header } from '../pages/header';
+import { LoginPage } from '../pages/loginPage';
+import { staticData } from '../utils/dataFixture.json';
+import { alertMessage } from '../pages/loginPage';
 dotenv.config();
 
 

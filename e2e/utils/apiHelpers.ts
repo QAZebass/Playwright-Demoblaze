@@ -2,7 +2,7 @@ import { test, expect, APIRequestContext } from "@playwright/test";
 export let selectedUnsortedProductDetails: any[] = [];
 export let parsedResponse: string;
 export let id: string = "";
-import { token } from "../add-delete-product-from-cart.spec";
+import { token } from "../specs/add-delete-product-from-cart.spec";
 export let productID, productuuid, deletionStatusResponse;
 
 function getRandomNumber(min, max) {

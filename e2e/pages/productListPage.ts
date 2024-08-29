@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test";
-import { productCategory } from "./homePage";
 import { Header } from "./header";
 import { cartPage } from "./cartPage";
+import { productDetailPage } from "./productDetailPage";
 
 //export let product: any;
 function getRandomNumber(min: number, max: number) {
@@ -16,8 +16,10 @@ export class productListPage {
   private titles: Locator;
   private header: Header;
   private cartpage: cartPage;
+  private pdp: productDetailPage;
 
   constructor(page: Page) {
+    this.pdp = new productDetailPage(page);
     this.cartpage = new cartPage(page);
     this.header = new Header(page);
     this.page = page;
@@ -41,6 +43,13 @@ export class productListPage {
       product: product,
       price: price
     };
+    return productInformation;
+  }
+
+  async addProductToCart(): Promise<models.ProductInfo | undefined> {
+    await this.pdp.cartAlertListener();
+    const productInformation = await this.clickOnRandomProduct();
+    await this.pdp.clickOnAddToCartButton();
     return productInformation;
   }
 
