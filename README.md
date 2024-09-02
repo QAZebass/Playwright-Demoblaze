@@ -25,7 +25,7 @@
 </div>
 
 <h2 align="left">The Project</h2>
-As you see, this Testing Automation project uses Playwright + TS. The tests test functionalities of the site "Demoblaze". The features are "Login", "Cart" and "Purchase". Of course I'll be adding more content as I learn and improve my techniques and skills in programming and as a tester too. So bear in mind that this is a work in progress.
+As you see, this Testing Automation project uses Playwright + TS. The tests test functionalities of the site "Demoblaze". The features are "Login", "Cart - Purchase" and "Contact Message". Of course I'll be adding more content as I learn and improve my techniques and skills in programming and as a tester too. So bear in mind that this is a work in progress.
 
 <h2 align="left">Folder Structure</h2>
 
