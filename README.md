@@ -2,7 +2,7 @@
 
 ###
 
-<p align="left">I'm a QA Automation and I created this repo in order to show the things I can do in Playwright. For sure I'll be adding more tests and modifying things as I learn more. Isn't that all about?</p>
+<p align="left">I'm a QA Automation and I created this repo in order to show the things I can do in Playwright. For sure I'll be adding more tests and modifying things as I learn more. Isn't that all about?. That's you'll see some extra setup files or utils that I don't actually use in this project since I intended to run more tests in parallel but due to some problems of tests interacting with each other I decided to make things simpler.</p>
 
 ###
 
