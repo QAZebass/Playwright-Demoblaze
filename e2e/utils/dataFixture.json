@@ -1,24 +1,27 @@
 {
-  "staticData": {
+  "credentials": {
     "invalidPassword": "test123",
-    "invalidUser": "Zeba",
-    "titles": {
-      "contactListTitle": "Contact List",
-      "signUpTitle": "Not yet a user? Click here to sign up!",
-      "registerTitle": "Sign up to begin adding your contacts!"
-    },
-    "errorMessage": {
-      "wrongPass": "Wrong password",
-      "wrongUser": "User does not exist."
-    },
-    "cartConfirmation": {
-      "productAddedtoCart": "Product added."
-    },
-    "status": {
-      "ok": 200
-    },
-    "purchaseConfirmation": {
-      "message": "Thank you for your purchase!"
-    }
+    "invalidUser": "Zeba"
+  },
+  "titles": {
+    "contactListTitle": "Contact List",
+    "signUpTitle": "Not yet a user? Click here to sign up!",
+    "registerTitle": "Sign up to begin adding your contacts!"
+  },
+  "errorMessage": {
+    "wrongPass": "Wrong password",
+    "wrongUser": "User does not exist."
+  },
+  "cartConfirmation": {
+    "productAddedtoCart": "Product added."
+  },
+  "status": {
+    "ok": 200
+  },
+  "purchaseConfirmation": {
+    "message": "Thank you for your purchase!"
+  },
+  "contactMessageConfirmation": {
+    "message": "Thanks for the message!!"
   }
 }

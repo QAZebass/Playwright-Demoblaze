@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 import { HomePage } from "../pages/homePage";
-import { staticData } from '../utils/dataFixture.json';
+import { purchaseConfirmation } from '../utils/dataFixture.json';
 import { dataGenerator } from "../utils/dataGenerator";
 import { cartPage } from "../pages/cartPage";
 import { Header } from "../pages/header";
@@ -11,7 +11,7 @@ test.describe("Demoblaze Purchase Testing", async () => {
         await page.goto("/");
     });
 
-    test("TC1: Validate that the user can complete the purchase of two items", async ({ page, context }) => {
+    test("TC1: Validate that the user can complete the purchase of two items", async ({ page }) => {
 
         const homepage = new HomePage(page);
         const header = new Header(page);
@@ -26,10 +26,9 @@ test.describe("Demoblaze Purchase Testing", async () => {
         await cartpage.clickOnPlaceOrderButton();
         await cartpage.fillOrderModal(name, country, city, creditCard, month, year);
         await cartpage.clickOnPurchaseButton();
-        await cartpage.clickOkButton(staticData.purchaseConfirmation.message);
+        await cartpage.clickOkButton(purchaseConfirmation.message);
 
-        await context.clearCookies();
-        await context.clearPermissions();
     });
 
 });
+
