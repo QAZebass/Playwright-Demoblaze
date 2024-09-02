@@ -46,7 +46,7 @@ jobs:
         run: |
           cd ./e2e/specs
           yarn install
-          xvfb-run npx playwright test
+          xvfb-run yarn test
     
 
       - name: Install Demoblaze artifact 📊   
