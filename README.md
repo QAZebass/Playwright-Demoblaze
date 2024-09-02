@@ -2,7 +2,7 @@
 
 ###
 
-<p align="left">I'm a QA Automation and I created this repo in order to show the things I can do in Playwright. For sure I'll be adding more tests and modifying things as I learn more. Isn't that all about?. That's you'll see some extra setup files or utils that I don't actually use in this project since I intended to run more tests in parallel but due to some problems of tests interacting with each other I decided to make things simpler.</p>
+<p align="left">I'm a QA Automation and I created this repo in order to show the things I can do in Playwright. For sure I'll be adding more tests and modifying things as I learn more. Isn't that all about?. That's you'll see some extra setup files, utils or unused methods that I don't actually use in this project since I intended to run more tests in parallel but due to some problems of tests interacting with each other I decided to make things simpler.</p>
 
 ###
 
@@ -74,3 +74,12 @@ As you see, this Testing Automation project uses Playwright + TS. The tests test
 ┗ 📜yarn.lock
 
 ```
+<h2 align="left">How to run the tests (In case you want)</h2>
+
+Bear in mind you'll first need to set environment variables in your secrets, which is the "USER_NAME" AND "PASSWORD". You can create your user in Demoblaze and then set them. You'll then need to install dotenv and create your .env.Demoblaze file in your root.
+
+1) Copy the project URL to the clipboard
+2) Use gitbash and clone the repository --> git clone projectURL
+3) One the folder is in your PC, you can go into the folder, open gitbash and go "code ." to open VS code in the folder
+4) Open the console, do "yarn" to install all the dependencies.
+5) When the install is all over, simply run the script "yarn test"
