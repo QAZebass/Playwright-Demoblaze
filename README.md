@@ -36,6 +36,7 @@ As you see, this Testing Automation project uses Playwright + TS. The tests test
 ┣ 📂e2e
 ┃ ┣ 📂pages
 ┃ ┃ ┣ 📜cartPage.ts
+┃ ┃ ┣ 📜contactPage.ts
 ┃ ┃ ┣ 📜header.ts
 ┃ ┃ ┣ 📜homePage.ts
 ┃ ┃ ┣ 📜loginPage.ts
@@ -51,14 +52,18 @@ As you see, this Testing Automation project uses Playwright + TS. The tests test
 ┃ ┃ ┣ 📜login.setup2.ts
 ┃ ┃ ┗ 📜login.setup3.ts
 ┃ ┣ 📂specs
-┃ ┃ ┣ 📜add-delete-product-from-cart.spec.ts
-┃ ┃ ┣ 📜complete-product-purchase.spec.ts
-┃ ┃ ┗ 📜login.spec.ts
+┃ ┃ ┣ 📜add-to-cart-complete-purchase.spec.ts
+┃ ┃ ┣ 📜login.spec.ts
+┃ ┃ ┗ 📜send-contact-message.spec.ts
 ┃ ┗ 📂utils
 ┃   ┣ 📜apiHelpers.ts
 ┃   ┣ 📜browserUtils.ts
 ┃   ┣ 📜dataFixture.json
 ┃   ┗ 📜dataGenerator.ts
+┣ 📂playwright-report
+┃ ┗ 📜index.html
+┣ 📂test-results
+┃ ┗ 📜.last-run.json
 ┣ 📜.env.Demoblaze
 ┣ 📜.gitignore
 ┣ 📜global.d.ts
