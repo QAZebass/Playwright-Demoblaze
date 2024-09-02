@@ -2,7 +2,7 @@
 
 ###
 
-<p align="left">I'm a QA Automation and I created this repo in order to show the things I can do in Playwright. For sure I'll be adding more tests and modifying things as I learn more. Isn't that all about?. That's you'll see some extra setup files, utils or unused methods that I don't actually use in this project since I intended to run more tests in parallel but due to some problems of tests interacting with each other I decided to make things simpler.</p>
+<p align="left">I'm a QA Automation and I created this repo in order to show the things I can do in Playwright. For sure I'll be adding more tests and modifying things as I learn more. Isn't that all about?. </p>
 
 ###
 
@@ -25,7 +25,8 @@
 </div>
 
 <h2 align="left">The Project</h2>
-As you see, this Testing Automation project uses Playwright + TS. The tests test functionalities of the site "Demoblaze". The features are "Login", "Cart - Purchase" and "Contact Message". Of course I'll be adding more content as I learn and improve my techniques and skills in programming and as a tester too. So bear in mind that this is a work in progress.
+As you see, this Testing Automation project uses Playwright + TS. The tests test functionalities of the site "Demoblaze". The features are "Login", "Cart - Purchase" and "Contact Message". Initially I had included more tests for the "cart" feature, but then I decided to get rid of some tests due to some conflicts of data being shared across ome test involving the same modules. That's why you'll see some unused methods of setup files. 
+Apart from that, I'll be adding more content as I learn and improve my techniques and skills in programming and as a tester too. So bear in mind that this is a work in progress.
 
 <h2 align="left">Folder Structure</h2>
 
@@ -78,8 +79,8 @@ As you see, this Testing Automation project uses Playwright + TS. The tests test
 
 Bear in mind you'll first need to set environment variables in your secrets, which is the "USER_NAME" AND "PASSWORD". You can create your user in Demoblaze and then set them. You'll then need to install dotenv and create your .env.Demoblaze file in your root.
 
-1) Copy the project URL to the clipboard
-2) Use gitbash and clone the repository --> git clone projectURL
-3) One the folder is in your PC, you can go into the folder, open gitbash and go "code ." to open VS code in the folder
-4) Open the console, do "yarn" to install all the dependencies.
-5) When the install is all over, simply run the script "yarn test"
+:one: Copy the project URL to the clipboard
+:two: Use gitbash and clone the repository --> git clone projectURL
+:three: One the folder is in your PC, you can go into the folder, open gitbash and go "code ." to open VS code in the folder
+:four: Open the console, do "yarn" to install all the dependencies.
+:five: When the install is all over, simply run the script "yarn test"
