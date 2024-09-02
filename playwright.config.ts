@@ -62,7 +62,8 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         headless: true,
-        storageState: './e2e/playwright/.auth/user1.json'
+        storageState: './e2e/playwright/.auth/user1.json',
+        baseURL: 'https://www.demoblaze.com/'
       },
       dependencies: ['setup'],
     },

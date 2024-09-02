@@ -66,14 +66,6 @@ export class cartPage {
     this.thankYouMessage = this.page.locator('[class$="showSweetAlert visible"] h2');
     this.okButton = this.page.getByRole('button', { name: 'OK' });
   }
-  async waitForTwoProductsInCart() {
-    await this.productTitlesInTable.count().then(async count => {
-      while (count !== 2) {
-        new Promise(resolve => setTimeout(resolve, 100)); // 100ms wait
-        count = await this.productTitlesInTable.count();
-      }
-    });
-  }
 
 
   async gettingProductInfoInCart() {
@@ -82,8 +74,6 @@ export class cartPage {
     await expect(this.table).toBeVisible();
     /* const length = (await this.productTitlesInTable.all()).length;
     expect(length).toBe(2); */
-
-    await this.waitForTwoProductsInCart();
 
     const products = await this.productTitlesInTable.evaluateAll(products => products.map(product => product.textContent?.trim()));
     products.forEach(product => productDetailsInTable.push(product));

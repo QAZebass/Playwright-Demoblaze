@@ -41,14 +41,12 @@ jobs:
           echo "USER_NAME=${{ secrets.USER_NAME }}" >> $GITHUB_ENV
           echo "PASSWORD=${{ secrets.PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Run login setup script
-        run: npx ts-node e2e/setups/login.setup.ts    
 
       - name: Run tests for Demoblaze 🧩
         run: |
           cd ./e2e/specs
           yarn install
-          xvfb-run npx playwright test
+          xvfb-run yarn test
     
 
       - name: Install Demoblaze artifact 📊   
