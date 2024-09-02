@@ -79,8 +79,8 @@ Apart from that, I'll be adding more content as I learn and improve my technique
 
 Bear in mind you'll first need to set environment variables in your secrets, which is the "USER_NAME" AND "PASSWORD". You can create your user in Demoblaze and then set them. You'll then need to install dotenv and create your .env.Demoblaze file in your root.
 
-:one: Copy the project URL to the clipboard
-:two: Use gitbash and clone the repository --> git clone projectURL
-:three: One the folder is in your PC, you can go into the folder, open gitbash and go "code ." to open VS code in the folder
-:four: Open the console, do "yarn" to install all the dependencies.
-:five: When the install is all over, simply run the script "yarn test"
+1) Copy the project URL to the clipboard
+2) Use gitbash and clone the repository --> git clone projectURL
+3) Once the folder is in your PC, you can go into the folder, open gitbash and go "code ." to open VS code in the folder
+4) Open the console, do "yarn" to install all the dependencies.
+5) When the install is all over, simply run the script "yarn test"
