@@ -15,7 +15,7 @@ dotenv.config({ path: './.env.Demoblaze' });
  */
 export default defineConfig({
 
-  testDir: './e2e',
+  testDir: './e2e/specs',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -58,7 +58,7 @@ export default defineConfig({
     //PROJECTS
     {
       name: 'Demoblaze-E2E-tests-in-Chrome',
-      testDir: './e2e',
+      testDir: './e2e/specs',
       use: {
         ...devices['Desktop Chrome'],
         headless: true,

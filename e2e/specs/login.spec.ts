@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import { test, expect } from "@playwright/test";
-import { Header } from './pages/header';
-import { LoginPage } from './pages/loginPage';
-import { staticData } from './utils/dataFixture.json';
-import { alertMessage } from './pages/loginPage';
+import { Header } from '../pages/header';
+import { LoginPage } from '../pages/loginPage';
+import { credentials, errorMessage } from '../utils/dataFixture.json';
+import { alertMessage } from '../pages/loginPage';
 dotenv.config();
 
 
@@ -35,10 +35,10 @@ test.describe("Log into Demoblaze", () => {
         await page.goto('/');
         await header.clickLogInButton();
         await loginpage.typeInUsername(username!);
-        await loginpage.typeInPassword(staticData.invalidPassword);
+        await loginpage.typeInPassword(credentials.invalidPassword);
         await loginpage.alertListener();
         await loginpage.clickLogIn();
-        expect(alertMessage).toMatch(staticData.errorMessage.wrongPass);
+        expect(alertMessage).toMatch(errorMessage.wrongPass);
     });
 
     test("TC3: Validate that the user can't login with wrong username", async ({ page }) => {
@@ -49,11 +49,11 @@ test.describe("Log into Demoblaze", () => {
 
         await page.goto("/");
         await header.clickLogInButton();
-        await loginpage.typeInUsername(staticData.invalidUser);
+        await loginpage.typeInUsername(credentials.invalidUser);
         await loginpage.typeInPassword(password!);
         await loginpage.alertListener();
         await loginpage.clickLogIn();
-        expect(alertMessage).toMatch(staticData.errorMessage.wrongUser);
+        expect(alertMessage).toMatch(errorMessage.wrongUser);
     });
 });
 

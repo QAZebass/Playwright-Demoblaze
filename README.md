@@ -1,39 +1,86 @@
-# Playwright-Demoblaze
+![github-header-image (3)](https://github.com/user-attachments/assets/d43548c0-8534-437b-ba1d-cb27fc25ca96)
 
+###
 
-## Folder Structure
+<p align="left">I'm a QA Automation and I created this repo in order to show the things I can do in Playwright. For sure I'll be adding more tests and modifying things as I learn more. Isn't that all about?. </p>
 
-Playwright-Demoblaze
-├── .env.Demoblaze
-├── .github
-│   └── workflows
-│       └── playwright.yml
-├── .gitignore
-├── e2e
-│   ├── add-delete-product-from-cart.spec.ts
-│   ├── add-items-and-purchase.spec.ts
-│   ├── login.spec.ts
-│   ├── pages
-│   │   ├── cartPage.ts
-│   │   ├── header.ts
-│   │   ├── homePage.ts
-│   │   ├── loginPage.ts
-│   │   ├── productDetailPage.ts
-│   │   └── productListPage.ts
-│   ├── playwright
-│   │   └── .auth
-│   │       ├── user1.json
-│   │       ├── user2.json
-│   │       └── user3.json
-│   ├── setups
-│   │   ├── login.setup.ts
-│   │   ├── login.setup2.ts
-│   │   └── login.setup3.ts
-│   └── utils
-│       ├── apiHelpers.ts
-│       ├── browserUtils.ts
-│       ├── dataFixture.ts
-│       └── dataGenerator.ts
-├── playwright.config.ts
-├── README.md
-└── yarn.lock
+###
+
+<h2 align="left">About me</h2>
+
+###
+
+<p align="left">📚 I'm currently using and learning Playwright<br>🎯 Goals:  Become the ultimate tester ninja!</p>
+
+###
+
+<h2 align="left">I code with</h2>
+
+###
+
+<div align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo"  />
+</div>
+
+<h2 align="left">The Project</h2>
+As you see, this Testing Automation project uses Playwright + TS. The tests test functionalities of the site "Demoblaze". The features are "Login", "Cart - Purchase" and "Contact Message". Initially I had included more tests for the "cart" feature, but then I decided to get rid of some tests due to some conflicts of data being shared across ome test involving the same modules. That's why you'll see some unused methods of setup files. 
+Apart from that, I'll be adding more content as I learn and improve my techniques and skills in programming and as a tester too. So bear in mind that this is a work in progress.
+
+<h2 align="left">Folder Structure</h2>
+
+```
+┣ 📂.github
+┃ ┗ 📂workflows
+┃   ┗ 📜playwright.yml
+┣ 📂e2e
+┃ ┣ 📂pages
+┃ ┃ ┣ 📜cartPage.ts
+┃ ┃ ┣ 📜contactPage.ts
+┃ ┃ ┣ 📜header.ts
+┃ ┃ ┣ 📜homePage.ts
+┃ ┃ ┣ 📜loginPage.ts
+┃ ┃ ┣ 📜productDetailPage.ts
+┃ ┃ ┗ 📜productListPage.ts
+┃ ┣ 📂playwright
+┃ ┃ ┗ 📂.auth
+┃ ┃   ┣ 📜user1.json
+┃ ┃   ┣ 📜user2.json
+┃ ┃   ┗ 📜user3.json
+┃ ┣ 📂setups
+┃ ┃ ┣ 📜login.setup.ts
+┃ ┃ ┣ 📜login.setup2.ts
+┃ ┃ ┗ 📜login.setup3.ts
+┃ ┣ 📂specs
+┃ ┃ ┣ 📜add-to-cart-complete-purchase.spec.ts
+┃ ┃ ┣ 📜login.spec.ts
+┃ ┃ ┗ 📜send-contact-message.spec.ts
+┃ ┗ 📂utils
+┃   ┣ 📜apiHelpers.ts
+┃   ┣ 📜browserUtils.ts
+┃   ┣ 📜dataFixture.json
+┃   ┗ 📜dataGenerator.ts
+┣ 📂playwright-report
+┃ ┗ 📜index.html
+┣ 📂test-results
+┃ ┗ 📜.last-run.json
+┣ 📜.env.Demoblaze
+┣ 📜.gitignore
+┣ 📜global.d.ts
+┣ 📜package.json
+┣ 📜playwright.config.ts
+┣ 📜README.md
+┣ 📜tsconfig.json
+┗ 📜yarn.lock
+
+```
+<h2 align="left">How to run the tests (In case you want)</h2>
+
+Bear in mind you'll first need to set environment variables in your secrets, which is the "USER_NAME" AND "PASSWORD". You can create your user in Demoblaze and then set them. You'll then need to install dotenv and create your .env.Demoblaze file in your root.
+
+1) Copy the project URL to the clipboard
+2) Use gitbash and clone the repository --> git clone projectURL
+3) Once the folder is in your PC, you can go into the folder, open gitbash and go "code ." to open VS code in the folder
+4) Open the console, do "yarn" to install all the dependencies.
+5) When the install is all over, simply run the script "yarn test"

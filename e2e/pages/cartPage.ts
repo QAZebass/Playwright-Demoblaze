@@ -1,6 +1,7 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { selectedProductDetails } from "./productDetailPage";
 import { Header } from "./header";
+
 export let productDetailsInTable: any[] = [];
 export let cartAlertConfirmation = "";
 export let totalPriceInCart: any;
@@ -9,7 +10,7 @@ let pricesSum: number;
 
 export class cartPage {
   private header: Header;
-  page: Page;
+  private page: Page;
   private table: Locator;
   private tableRows: Locator;
   private deleteButton: Locator;
@@ -65,14 +66,25 @@ export class cartPage {
     this.thankYouMessage = this.page.locator('[class$="showSweetAlert visible"] h2');
     this.okButton = this.page.getByRole('button', { name: 'OK' });
   }
+  async waitForTwoProductsInCart() {
+    await this.productTitlesInTable.count().then(async count => {
+      while (count !== 2) {
+        new Promise(resolve => setTimeout(resolve, 100)); // 100ms wait
+        count = await this.productTitlesInTable.count();
+      }
+    });
+  }
 
 
   async gettingProductInfoInCart() {
 
     await this.cartTitle.waitFor({ state: 'visible' });
     await expect(this.table).toBeVisible();
-    const length = (await this.productTitlesInTable.all()).length;
-    expect(length).toBe(2);
+    /* const length = (await this.productTitlesInTable.all()).length;
+    expect(length).toBe(2); */
+
+    await this.waitForTwoProductsInCart();
+
     const products = await this.productTitlesInTable.evaluateAll(products => products.map(product => product.textContent?.trim()));
     products.forEach(product => productDetailsInTable.push(product));
     const prices = await this.productPricesInTable.evaluateAll(prices => prices.map(price => price.textContent?.trim()));
@@ -115,43 +127,43 @@ export class cartPage {
     await this.thankYouModal.waitFor({ state: "hidden" });
   }
 
-  async checkingProductInCart(product: string | null): Promise<models.ProductInCart | undefined> {
+  async checkingProductInCart(product: string | null): Promise<models.ProductInfo | undefined> {
     await this.header.waitForLoginState();
     await this.table.waitFor({ state: 'visible' });
     const arrayOfRows = await this.tableRows.all();
     for (let i = 0; i <= arrayOfRows.length - 1; i++) {
-      const rowProduct = await this.page.locator(`[class="success"] >> nth=${i} >> td >> nth=1`).textContent();
+      const rowProduct = await this.productTitlesInTable.nth(i).textContent();
       if (rowProduct === product) {
         const productInCart = await this.productTitlesInTable.nth(i).textContent();
         const cartProductPrice = await this.productPricesInTable.nth(i).textContent();
-        const informationObject: models.ProductInCart = {
-          productInCart: productInCart,
-          productPriceInCart: cartProductPrice
+        const productsInfoInCart: models.ProductInfo = {
+          product: productInCart,
+          price: cartProductPrice
         };
-        return informationObject;
+        return productsInfoInCart;
       }
     }
   }
 
 
-  async deleteItemFromCart(product: string | null) {
+  async deleteItemFromCart(product: string | null): Promise<Locator | undefined> {
 
     await this.header.waitForLoginState();
     await this.table.waitFor({ state: 'visible' });
     const arrayOfRows = await this.tableRows.all();
     for (let i = 0; i <= arrayOfRows.length - 1; i++) {
-      const productRow = await this.page.locator(`[class="success"] >> nth=${i} >> td >> nth=1`).textContent();
+      const productRow = await this.productTitlesInTable.nth(i).textContent();
       if (productRow === product) {
         console.log("Product found in the cart.");
         await this.deleteButton.nth(i).waitFor({ state: 'attached' });
-        await this.deleteButton.nth(i).click({ timeout: 2000 });
-
-        await this.page.locator(`[class="success"] >> nth=${i}`).waitFor({ state: 'detached' });
-        console.log("Product successfully deleted from the cart.");
-
-        break;
+        await this.deleteButton.nth(i).click();
+        const productLocator: Locator = this.productTitlesInTable.nth(i);
+        return productLocator;
       }
     }
+  }
+  async waitForTable() {
+    await this.table.waitFor({ state: 'visible' });
   }
 
 }
